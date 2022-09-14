@@ -76,14 +76,16 @@
 \newcommand\columnvector[1]{\setstackEOL{,}\bracketVectorstack{#1}}
 
 
-\title{Dice problems}
-\author{Author names}
-\date{March 2022}
+\title{Mihaela Ifrim's Lecture Notes on Dispersive PDE}
+\date{Fall 2022}
 
 
 \begin{document}
+\section{Lecture 1: 2022-09-08}
+Not typed up yet.
+
 \section{Lecture 2: 2022-09-13}
-Recall the dispersion relation $a(\xi)$. If $a''(\xi) \neq 0$ then the PDE  is
+Recall the dispersion relation $a(\xi)$. If $a''(\xi) \neq 0$ then the PDE is
 said to be \textbf{fully dispersive}. If $\xi\in \R^{d}$ then $\nabla^{2}a(\xi)$
 is the hessian. The appropriate thing to do in that case is to diagonalize...
 we'll get to that.
@@ -94,7 +96,8 @@ we'll get to that.
   $\alpha(\xi)=|\xi|$. So that
   $a'(\xi)= -\nabla a(\xi)= \frac{\xi}{\left| \xi \right|}$. Then the hessian is
   \begin{equation*}
-    \nabla^{2}_{\xi} a(\xi) = \frac{1}{\left| \xi \right|}\left[ I_{n}-\frac{\xi}{|\xi|}\otimes \frac{\xi}{|\xi|} \right] 
+    \nabla^{2}_{\xi} a(\xi) 
+    = \frac{1}{\left| \xi \right|}\left[ I_{n}-\frac{\xi}{|\xi|}\otimes \frac{\xi}{|\xi|} \right] 
   \end{equation*}
   where $I_{n}$ is the $n\times n$ identity matrix. The thing in brackets is the
   orthogonal projection onto the plane perpendicular to $\xi/|\xi|$ (i.e.
@@ -144,9 +147,9 @@ we'll get to that.
   Recall the fundamental solution to the wave equation is
   $K_{\square}= c \frac{1}{t}\delta$. Give this a little bit of thought. Do this
   example to bush up. This example shows why the finite group velocity does not
-  imply finite speed of propagation. This example looks like the example from last
-  time that had a star with it. The operatior $|D|$ is the operator with symbol
-  $|\xi|$. In one dimension, this is the Hilbert transform.
+  imply finite speed of propagation. This example looks like the example from
+  last time that had a star with it. The operatior $|D|$ is the operator with
+  symbol $|\xi|$. In one dimension, this is the Hilbert transform.
 \end{example}
 
 \Fl{Question:} What are the long time dynamics for linear dispersive waves?
@@ -156,8 +159,8 @@ Scalar case. Suppose we have
 \begin{equation*}
   \curly{i\partial_{t}u +A(D)u=0}{u_{0}(x)=u(0,x)\in \mathcal{S}}
 \end{equation*}
-where $\mathcal{S}$ denotes the Schwarz space. What happens with this wave as $t
-\to \infty$?
+where $\mathcal{S}$ denotes the Schwarz space. What happens with this wave as
+$t \to \infty$?
 
 Then the solution is
 \begin{equation*}
@@ -173,8 +176,8 @@ now let's go back and write it on the spatial side:
 \begin{equation*}
   u(t,x) = \int e^{ix\cdot\xi}e^{ita(\xi)}\hat{u}_{0}(\xi)d\xi
 \end{equation*}
-where $\hat{u}_{0}(\xi)$ is a Schwarz function (since $u_{0}\in
-\mathcal{S}$ and the Fourier Transform maps Schwarz functions to Schwarz functions). Therefore
+where $\hat{u}_{0}(\xi)$ is a Schwarz function (since $u_{0}\in \mathcal{S}$ and
+the Fourier Transform maps Schwarz functions to Schwarz functions). Therefore
 \begin{equation*}
   u(t,x) = \int e^{i(x\cdot\xi+ta(\xi))}\hat{u}_{0}(\xi)d\xi
 \end{equation*}
@@ -208,7 +211,8 @@ Let
 First, suppose that $\phi(\xi) \neq 0$. This is called the nonstationary phase
 argument. Take
 \begin{equation*}
-  I = \int \partial_{\xi} \left( e^{i\lambda \phi} \right)\frac{1}{i\lambda \phi'(\xi)} a(\xi)d\xi  
+  I 
+  = \int \partial_{\xi} \left( e^{i\lambda \phi} \right)\frac{1}{i\lambda \phi'(\xi)} a(\xi)d\xi  
 \end{equation*}
 Integrating by parts $N$ times will give a $\lambda^{-N}$ in front (e.g. if $a$
 is a polynomial then $N$ would be the degree of $a$). Therefore as
@@ -220,8 +224,8 @@ which decays very quickly. Therefore the solution of \cref{eq:3}, understood as
 a function $u=u(t,v)$ disperses very fast---it decays rapidly.
 
 On the other hand, suppose that $\phi'(\xi) = 0$. For example, if $\phi(\xi)$ is
-a constant. But that doesn't makeif $\xi_{0}$ is a critical point sense for our problem. So let's correct for
-that by requiring that
+a constant. But that doesn't makeif $\xi_{0}$ is a critical point sense for our
+problem. So let's correct for that by requiring that
 \begin{equation*}
   \phi''(\xi) \neq 0.
 \end{equation*}
@@ -230,28 +234,32 @@ we cannot integrate by parts. But what can we do? Another heuristic: if
 $\xi_{0}$ is a critical point, assume that when $\xi\approx \xi_{0}$, we can
 Taylor expand:
 \begin{align*}
-  \phi(\xi)
-  &= \phi(\xi_{0}) + (\xi-\xi_{0})\phi(\xi_{0}) + \frac{1}{2}(\xi-\xi_{0})^{2}\phi''(\xi)\\
+  \phi(\xi) 
+  &= \phi(\xi_{0}) + (\xi-\xi_{0})\phi(\xi_{0}) + \frac{1}{2}(\xi-\xi_{0})^{2}\phi''(\xi) \\
   &= \phi(\xi_{0}) + \frac{1}{2}(\xi-\xi_{0})^{2}\phi''(\xi).
 \end{align*}
 so that
 \begin{align*}
-  I  
-  &\approx \int e^{i\lambda \left[ \phi(\xi_{0})+\frac{1}{2}(\xi-\xi_{0})^{2}\phi''(\xi_{0}) \right] } a(\xi_{0})d\xi\\
-  &= e^{i\lambda \phi(\xi_{0})}a(\xi_{0}) \int e^{\frac{1}{2}i\lambda (\xi-\xi_{0})^{2}\phi''(\xi_{0})}d\xi 
+  I 
+  &\approx \int e^{i\lambda \left[ \phi(\xi_{0})+\frac{1}{2}(\xi-\xi_{0})^{2}\phi''(\xi_{0}) \right] } a(\xi_{0})d\xi \\
+  &= e^{i\lambda \phi(\xi_{0})}a(\xi_{0}) \int e^{\frac{1}{2}i\lambda (\xi-\xi_{0})^{2}\phi''(\xi_{0})}d\xi
 \end{align*}
 and the integral is a complex Gaussian which can be computed with the rule
 \begin{equation*}
-  \int_{0}^{\infty}e^{i\alpha x^{2}}dx = e^{i\pi \text{sign}(|\alpha|)/4} \sqrt{\frac{\pi}{4\alpha}} , \quad \alpha \neq 0.
+  \int_{0}^{\infty}e^{i\alpha x^{2}}dx 
+  = e^{i\pi \text{sign}(|\alpha|)/4} \sqrt{\frac{\pi}{4\alpha}}
+  , \quad \alpha  \neq 0.
 \end{equation*}
 with $\alpha = \frac{1}{2}\lambda \phi''(\xi_{0})$. So we get
 \begin{equation*}
-  I\approx e^{i \lambda \phi(\xi_{0})} a(\xi_{0}) \frac{1}{\sqrt{\lambda}} \cdot \frac{1}{\sqrt{\phi''(\xi_{0})}}
+  I 
+  \approx e^{i \lambda \phi(\xi_{0})} a(\xi_{0}) \frac{1}{\sqrt{\lambda}} \cdot \frac{1}{\sqrt{\phi''(\xi_{0})}}
 \end{equation*}
 multiplied by some other thing that aren't important. Taking $\phi = v\xi +
 a(\xi)$  and $\lambda= t$ gives
 \begin{equation*}
-  u(t,vt)\approx e^{it \left[ v_{\xi}\xi_{0}+ a(\xi_{0}) \right] }\frac{1}{\sqrt{t}}\hat{u}_{0}(\xi_{v})
+  u(t,vt) 
+  \approx e^{it \left[ v_{\xi}\xi_{0}+ a(\xi_{0}) \right] }\frac{1}{\sqrt{t}}\hat{u}_{0}(\xi_{v})
 \end{equation*}
 with some other things.
 \end{document}
