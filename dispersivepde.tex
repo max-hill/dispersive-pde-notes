@@ -1,0 +1,257 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+
+% Math Packages
+\usepackage{amsmath, mathtools}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{bbm}
+\usepackage{breqn}
+\usepackage[margin=1in]{geometry}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{forest}
+\usepackage{tikz-qtree}
+\graphicspath{ {./images/} }
+\usepackage{hyperref}
+\usepackage[shortlabels]{enumitem}
+\usetikzlibrary{arrows,matrix,positioning}
+\usepackage[ruled,vlined]{algorithm2e}
+
+% References
+\usepackage[capitalize]{cleveref}
+
+% Colorful Notes
+\usepackage{color}
+\definecolor{Red}{rgb}{1,0,0}
+\definecolor{Blue}{rgb}{0,0,1}
+\definecolor{Purple}{rgb}{.5,0,.5}
+\def\red{\color{Red}}
+\def\blue{\color{Blue}}
+\def\gray{\color{gray}}
+\def\purple{\color{Purple}}
+
+\newcommand{\rnote}[1]{{\red [#1] }} % \rnote{foo} then 'foo' is red
+\newcommand{\bnote}[1]{{\blue #1}} % \bnote{foo} then 'foo' is blue
+\newcommand{\gnote}[1]{{\gray [#1]}} % gray note  -- for comments
+\newcommand{\pnote}[1]{{\purple [#1]}} % green note  -- for comments
+
+% Math Environments
+\newtheorem{theorem}{Theorem}
+\newtheorem{definition}{Definition}
+\newtheorem{assumption}{Assumption}
+\newtheorem{lemma}{Lemma}
+\newtheorem{remark}{Remark}
+\newtheorem{prop}{Proposition}
+\newtheorem{corollary}{Corollary}
+\newtheorem{example}{Example} 
+\newtheorem{question}{Question}
+\newtheorem{claim}{Claim} 
+\newtheorem{conjecture}{Conjecture} 
+
+% Custom Math Commands
+\newcommand{\vt}{\vskip 5mm} % vertical space
+\newcommand{\fl}{\noindent\textbf} % first line
+\newcommand{\Fl}{\vt\noindent\textbf} % first line with space above
+\def\R{\mathbb{R}} % Real numbers
+\def\Z{\mathbb{Z}} % Integers
+\def\E{\mathbb{E}} % Expectation
+\def\P{\mathbb{P}} % Probability
+\def\Q{\mathbb{Q}} % Q probability
+\newcommand{\indep}{\perp \!\!\! \perp}  %independence symbol
+\newcommand{\ifelse}[4]{\left\{ \begin{array}{l@{\quad:\quad}l}#1&#3\\#2&#4\end{array}\right.}
+\newcommand{\curly}[2]{\left\{ \begin{array}{l@{\quad}l}#1\\#2\end{array}\right.}
+
+
+\usepackage[utf8]{inputenc}
+\usepackage{hyperref}
+\usepackage{amsmath}
+\usepackage[shortlabels]{enumitem}
+\newtheorem{problem}{Problem}
+
+% Concise Vector Macro: write bracket vectors of arbitrary length
+% Usage: \columnvector{x,y,1} or \columnvector{2,x^2}
+\usepackage{stackengine}
+\newcommand\columnvector[1]{\setstackEOL{,}\bracketVectorstack{#1}}
+
+
+\title{Dice problems}
+\author{Author names}
+\date{March 2022}
+
+
+\begin{document}
+\section{Lecture 2: 2022-09-13}
+Recall the dispersion relation $a(\xi)$. If $a''(\xi) \neq 0$ then the PDE  is
+said to be \textbf{fully dispersive}. If $\xi\in \R^{d}$ then $\nabla^{2}a(\xi)$
+is the hessian. The appropriate thing to do in that case is to diagonalize...
+we'll get to that.
+
+\begin{example}[Wave Equation]
+  Suppose we have $\square u = 0$ with $d=1$. Then $a(\xi) = |\xi|$ so that
+  $a''(\xi)=0$ which is not dispersive. But if $d>1$ then since
+  $\alpha(\xi)=|\xi|$. So that
+  $a'(\xi)= -\nabla a(\xi)= \frac{\xi}{\left| \xi \right|}$. Then the hessian is
+  \begin{equation*}
+    \nabla^{2}_{\xi} a(\xi) = \frac{1}{\left| \xi \right|}\left[ I_{n}-\frac{\xi}{|\xi|}\otimes \frac{\xi}{|\xi|} \right] 
+  \end{equation*}
+  where $I_{n}$ is the $n\times n$ identity matrix. The thing in brackets is the
+  orthogonal projection onto the plane perpendicular to $\xi/|\xi|$ (i.e.
+  tangent to the sphere).
+
+  For example, consider $d=2$. Then we can diagonalize the Hessian matrix
+  $\nabla^{2}_{\xi}a$.  You get $\lambda=0$ and $\lambda= \frac{1}{|\xi|}$ as
+  eigenvalues and the diagonalized matrix is
+  \begin{equation*}
+    \begin{pmatrix}
+      0&0\\
+      0&\frac{1}{|\xi|}
+    \end{pmatrix}
+  \end{equation*}
+  The interpretation is that since one of the eigenvalues is zero, so you don't
+  have full dispersion. It's like degenerate dispersion. In particular, we don't
+  have disperion in the radian direction. Try playing with this in the 2D. 
+\end{example}
+\begin{remark}
+  The wave equation in $d>1$ has dispersion (degenerate). Also, last lecture had
+  something false in it. The false claim was that finite speed of propagation is
+  impied by bounded group velocity. (Recall that the \textbf{group velocity} is
+  the negative of the derivative of the dispersion relation: $-\nabla a(\xi)$.) 
+\end{remark}
+\begin{example}
+  Suppose $u:\R\times\R^{3}\to \R$ satisfying
+  \begin{equation}\label{eq:1}
+    \curly{i\partial_{t}u +A(D)u =0}{u_{0}=u(0,\lambda)}
+  \end{equation}
+  We claim that this equation with $A(D)=|D|$ does not have finite speed of
+  propagation.
+
+  Finite speed propagation is if $u_{0}$ is supported on $B(a,R)$ then $t>0$,
+  $u(x,t)$ is going to be supported by $B(a,R+ct)$. The infimum of all such $c$'s
+  satifying the above condition is called \textbf{the finite speed of
+    propagation.}
+
+  Recall that we can take the Fourier transform of \cref{eq:1} and solve for the
+  fundamental solution:
+  \begin{equation*}
+    e^{it|D|} = \cos(t|D|)+ i \sin(t|D|)
+  \end{equation*}
+  here $D$ is the derivative with radial.
+  \begin{equation*}
+    |D| \frac{\sin(t|D|)}{|D|}
+  \end{equation*}
+  Recall the fundamental solution to the wave equation is
+  $K_{\square}= c \frac{1}{t}\delta$. Give this a little bit of thought. Do this
+  example to bush up. This example shows why the finite group velocity does not
+  imply finite speed of propagation. This example looks like the example from last
+  time that had a star with it. The operatior $|D|$ is the operator with symbol
+  $|\xi|$. In one dimension, this is the Hilbert transform.
+\end{example}
+
+\Fl{Question:} What are the long time dynamics for linear dispersive waves?
+
+
+Scalar case. Suppose we have
+\begin{equation*}
+  \curly{i\partial_{t}u +A(D)u=0}{u_{0}(x)=u(0,x)\in \mathcal{S}}
+\end{equation*}
+where $\mathcal{S}$ denotes the Schwarz space. What happens with this wave as $t
+\to \infty$?
+
+Then the solution is
+\begin{equation*}
+  \hat{u}(t,\xi) = \hat{u}_{0}e^{it a(\xi)}
+\end{equation*}
+where $a(\xi)$  is the symbol of the operator $A$. Remember, dispersivity is
+that every frequency moves in its own direction and with its own velocity. We
+want to quantify this. My solution:
+\begin{equation}\label{eq:3}
+  \hat{u}(t,\xi) = \hat{u}_{0}(\xi)e^{ita(\xi)}
+\end{equation}
+now let's go back and write it on the spatial side:
+\begin{equation*}
+  u(t,x) = \int e^{ix\cdot\xi}e^{ita(\xi)}\hat{u}_{0}(\xi)d\xi
+\end{equation*}
+where $\hat{u}_{0}(\xi)$ is a Schwarz function (since $u_{0}\in
+\mathcal{S}$ and the Fourier Transform maps Schwarz functions to Schwarz functions). Therefore
+\begin{equation*}
+  u(t,x) = \int e^{i(x\cdot\xi+ta(\xi))}\hat{u}_{0}(\xi)d\xi
+\end{equation*}
+Heuristically, we make the assumption that the waves (each localized a different
+frequency) travel and go out in a linear fasion (at least when time is big).
+When $t$ is very large, we write
+\begin{equation*}
+  u(t,x) = \int e^{it \left[ \frac{x}{t}\xi+a(\xi) \right] }\hat{u}_{0}(\xi)d\xi
+\end{equation*}
+and we think of $v:=x/t$ as velocity. Thus
+\begin{equation*}
+  u= u(t,v) = \int e^{it \left[ v\xi+a(\xi) \right] }\hat{u}_{0}(\xi)d\xi
+\end{equation*}
+and this is an oscillatory integral. This is oscillate rapidly when $t$ is
+large. One nice thing about it is that it has a complex phase, which is what
+makes it oscillate. We are interested in the long-time dynamics. That will
+result in cancellations, which can be seen when integrating by parts. There is a
+complication when doing integration by parts however because we don't know that
+the quantity 
+\begin{equation*}
+  \frac{\partial }{\partial \xi} \left[ itv\xi +a(\xi) \right] 
+\end{equation*}
+is nonzero and integration by parts would require it to be on the denominator.
+So we need to introduce something called stationary/nonstationary phase. In
+$d=1$, this is from Stein. The main understanding is the following:
+
+Let
+\begin{equation*}
+  I = \int e^{i\lambda\phi(\xi)}a(\xi)d\xi 
+\end{equation*}
+First, suppose that $\phi(\xi) \neq 0$. This is called the nonstationary phase
+argument. Take
+\begin{equation*}
+  I = \int \partial_{\xi} \left( e^{i\lambda \phi} \right)\frac{1}{i\lambda \phi'(\xi)} a(\xi)d\xi  
+\end{equation*}
+Integrating by parts $N$ times will give a $\lambda^{-N}$ in front (e.g. if $a$
+is a polynomial then $N$ would be the degree of $a$). Therefore as
+$t\to \infty$,
+\begin{equation*}
+  I = O(\lambda^{-N})
+\end{equation*}
+which decays very quickly. Therefore the solution of \cref{eq:3}, understood as
+a function $u=u(t,v)$ disperses very fast---it decays rapidly.
+
+On the other hand, suppose that $\phi'(\xi) = 0$. For example, if $\phi(\xi)$ is
+a constant. But that doesn't makeif $\xi_{0}$ is a critical point sense for our problem. So let's correct for
+that by requiring that
+\begin{equation*}
+  \phi''(\xi) \neq 0.
+\end{equation*}
+Thus any zeros are when we have critical points of $\phi$. Around those points,
+we cannot integrate by parts. But what can we do? Another heuristic: if
+$\xi_{0}$ is a critical point, assume that when $\xi\approx \xi_{0}$, we can
+Taylor expand:
+\begin{align*}
+  \phi(\xi)
+  &= \phi(\xi_{0}) + (\xi-\xi_{0})\phi(\xi_{0}) + \frac{1}{2}(\xi-\xi_{0})^{2}\phi''(\xi)\\
+  &= \phi(\xi_{0}) + \frac{1}{2}(\xi-\xi_{0})^{2}\phi''(\xi).
+\end{align*}
+so that
+\begin{align*}
+  I  
+  &\approx \int e^{i\lambda \left[ \phi(\xi_{0})+\frac{1}{2}(\xi-\xi_{0})^{2}\phi''(\xi_{0}) \right] } a(\xi_{0})d\xi\\
+  &= e^{i\lambda \phi(\xi_{0})}a(\xi_{0}) \int e^{\frac{1}{2}i\lambda (\xi-\xi_{0})^{2}\phi''(\xi_{0})}d\xi 
+\end{align*}
+and the integral is a complex Gaussian which can be computed with the rule
+\begin{equation*}
+  \int_{0}^{\infty}e^{i\alpha x^{2}}dx = e^{i\pi \text{sign}(|\alpha|)/4} \sqrt{\frac{\pi}{4\alpha}} , \quad \alpha \neq 0.
+\end{equation*}
+with $\alpha = \frac{1}{2}\lambda \phi''(\xi_{0})$. So we get
+\begin{equation*}
+  I\approx e^{i \lambda \phi(\xi_{0})} a(\xi_{0}) \frac{1}{\sqrt{\lambda}} \cdot \frac{1}{\sqrt{\phi''(\xi_{0})}}
+\end{equation*}
+multiplied by some other thing that aren't important. Taking $\phi = v\xi +
+a(\xi)$  and $\lambda= t$ gives
+\begin{equation*}
+  u(t,vt)\approx e^{it \left[ v_{\xi}\xi_{0}+ a(\xi_{0}) \right] }\frac{1}{\sqrt{t}}\hat{u}_{0}(\xi_{v})
+\end{equation*}
+with some other things.
+\end{document}
