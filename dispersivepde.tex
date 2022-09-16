@@ -76,15 +76,223 @@
 \newcommand\columnvector[1]{\setstackEOL{,}\bracketVectorstack{#1}}
 
 
-\title{Mihaela Ifrim's Lecture Notes on Dispersive PDE}
+\title{Lecture Notes for Mihaela Ifrim's Course on Dispersive PDE}
 \date{Fall 2022}
 
 
 \begin{document}
+\title{Statistics }
+\author{Max Hill}
+\maketitle
+\tableofcontents
+\newpage
+
 \section{Lecture 1: 2022-09-08}
-Not typed up yet.
+\subsection{Introduction to Dispersive PDEs}
+\begin{definition}[Dispersive PDE]
+  Informally, a PDE is characterized as \textbf{dispersive} if, when the the
+  boundary conditions are dropped, its wave solutions are going to spread out in
+  space as time evovles. Like a rock thrown into water.
+\end{definition}
+
+For now we will focus on \textit{linear} dispersive PDEs. Associated with a
+dispersive PDE:
+\begin{enumerate}
+  \item Dispersive Estimates
+  \item On the Fourier side, different frequencies at different speedss in
+  different directions.
+\end{enumerate}
+We first consider the simplest example.
+
+\begin{example}[Linear dispersive PDE with constant coefficients] \label{ex:linear-dispersive-pde-with-constant-coefficients}
+  Suppose $u(t,x):\R\times\R^{d}\to V \in \R^{d}$ such that
+  \begin{equation}
+    \label{eq:linear-constant-coefficient-pde}
+    \curly{i\partial_{t}u(t,x)=Lu(t,x)}{u(0,x)=u_{0}(x)}
+  \end{equation}
+  where $L$ is a skew-adjoint constant coeffieicent differential operator of
+  order $k$. In symbols, there exists constants $\left\{c_{\alpha}: \alpha\in
+    \Z_{\geq 0}^{d}\right\}$ such that
+  \begin{equation*}
+    Lu(t,\cdot) = \sum_{|\alpha| \leq k}c_{\alpha} \partial_{x}^{\alpha}u(t,\cdot)
+  \end{equation*}
+  where $|\alpha| := \alpha_{1}+\ldots+\alpha_{d}$ and for $x\in \R^{d}$, the
+  symbol $\partial_{x}^{\alpha}$ denotes the operator defined by
+  \begin{equation}
+    \label{eq:2} 
+    \partial_{x}^{\alpha}u := \prod_{i=1}^{d} \partial_{x_{i}}^{\alpha_{i}}u
+  \end{equation}
+  So, for example, if $d=2$, $c_{(0,1)}=2$, $c_{(2,5)}=-3$, and
+  $c_{\alpha}=0$ for all other choices of $\alpha$, then $L$ would be an order 7
+  differential operator taking the following form:
+  \begin{align*} 
+    Lu(t,\cdot)
+    &= 2 \partial_{x}^{(0,1)}u(t,\cdot)-3 \partial_{x}^{(2,5)}u(t,\cdot)\\
+    &= 2\partial_{x_{1}}^{0}u(t,\cdot)\partial_{x_{2}}^{1}u(t,\cdot) -3\partial_{x_{1}}^{2}u(t,\cdot)\partial_{x_{2}}^{5}u(t,\cdot)
+  \end{align*}
+  or equivalently,
+  \begin{equation*}
+    Lu(t,x_{1},x_{2}) = 2u(t,x_{1},x_{2})u_{x_{2}}(t,x_{1},x_{2}) -3u_{x_{1}x_{1}}(t,x_{1},x_{2})u_{x_{2}x_{2}x_{2}x_{2}x_{2}}(t,x_{1},x_{2})
+  \end{equation*}
+  Writing $x,y$ in place of $x_{1},x_{2}$, we get the nicer-looking formulation:
+  \begin{equation*}
+    Lu(t,x) = 2u(t,x,y)u_{y}(t,x,y)-3u_{xx}(t,x,y)u_{yyyyy}(t,x,y).
+  \end{equation*}
+  Since the operator defined in \cref{eq:2} does not compose different partial
+  differentiation operators together, $Lu$ does not involve any mixed partial derivatives of $u$ (e.g.
+  you'll never see terms like $u_{xy}$ or $u_{xxy}$).
+\end{example}
+
+\begin{remark}
+  The operator $L$ from
+  \cref{ex:linear-dispersive-pde-with-constant-coefficients} is defined
+  classically (i.e. pointwise) only if $u\in C^{k}(\R\times\R^{d})$, that is
+  only if $u$ is $k$-times continuously differentiable. But of course we may
+  extend $L$ in the usual manner so that it is defined in a distributional
+  sense.)
+\end{remark}
+
+\subsection{Dispersion Relation}
+\begin{definition}[Dispersion Relation and Frequency Operator]
+  \label{def:dispersion-relation-frequency-operator}
+  We can write $L$ in the form
+  \begin{equation*}
+    L = ia(D)
+  \end{equation*}
+  where $a$  is some function, called the \textbf{dispersion relation}, and $D$
+  is the \textbf{frequency operator} defined as
+  \begin{equation*}
+    D = \frac{1}{i}\nabla := \left( \frac{1}{i}\partial_{x_{1}},\ldots,\frac{1}{i}\partial_{x_{d}} \right) 
+  \end{equation*}
+\end{definition}
+\begin{remark}[Polynomial Dispersion Relations]
+  \label{rmk:polynomial-dispersion-relation}
+  It turns out that the form of the dispersion relation is important. When the
+  operator $L$  is of the form
+  \begin{equation*}
+    Lu= \partial_{t}u
+  \end{equation*}
+  (or something), then the dispersion relation
+  takes the form
+  \begin{equation}
+    \label{eq:polynomial-dispersion-relation}
+    a(\xi_{1},\ldots,\xi_{d})= \sum_{|\alpha| \leq k}i^{|\alpha|-1}c_{\alpha}\xi_{1}^{\alpha_{1}}\cdots \xi_{d}^{\alpha_{d}}
+  \end{equation}
+\end{remark}
+A large number of PDEs are governed by dispersion relations of the form given
+in \cref{eq:polynomial-dispersion-relation}, as we show in the next example.
+
+\begin{example}[Examples for \cref{rmk:polynomial-dispersion-relation}]
+  Here we list some examples of PDEs whose dispersion relations take the form
+  shown in \cref{eq:polynomial-dispersion-relation}.
+  \begin{itemize}
+    \item \textbf{A degenerate (i.e. nondispersive) example.} Suppose
+    \cref{eq:linear-constant-coefficient-pde} takes the form
+    \begin{equation*}
+      \curly{\partial_{t}u(t,x) = iwu(t,x)}{u(0,x)=u_{0}(x)}
+    \end{equation*}
+    where $u:\R\times\R\to\R$ and $w\in \R$. In this case the dispersion
+    relation is
+    \begin{equation*}
+      a(\xi) = w.
+    \end{equation*}
+    The solution to this system is $u(t,x)= u_{0}e^{itw}.$
+    \item \textbf{Another degenerate equation.} Fix $\nu\in \R^{d}$ and
+    consider the
+    \begin{equation*}
+      \curly{\partial_{t}u(t,x) = -\nu\cdot \nabla_{x}u(t,x)}{u_{0}(0,x)=u_{0}(x)}
+    \end{equation*}
+    An example solution to this is
+    \begin{equation*}
+      u(t,x) = u_{0}(x-\nu t)
+    \end{equation*}
+    something something transport equation. 
+
+    \item \textbf{The Airy Equation.} Suppose $d=1$, $u=u(t,x):\R\times\R \to \R$ such
+    that
+    \begin{equation*}
+      \partial_{t}u +\partial_{xxx}u=0.
+    \end{equation*}
+    In this case, the dispersion relation is
+    \begin{equation*}
+      a(\xi) = \xi^{3},\quad (\xi\in \R).
+    \end{equation*}
+
+    \item \textbf{Schrodinger (?) equation.} Suppose
+    \begin{equation*}
+      i\partial_{t}u +\Delta u = 0.
+    \end{equation*}
+    In this case, $L=-\Delta$ and $a(\xi)=|\xi|^{2}$. 
+    \item \textbf{Wave Equation.} Suppose
+    \begin{equation}\label{eq:wave-equation}
+      -u_{tt}+\Delta u = 0.
+    \end{equation}
+    in any dimnensions. This is dispersive.
+    \item \textbf{Klein-Gordon Equation.} Suppose
+    \begin{equation*}
+      -u_{tt} + \Delta u - u = 0.
+    \end{equation*}
+    This is dispersive.
+  \end{itemize}
+\end{example}
+
+It is not always the case that dispersion relations are polynomials of the form
+given in \cref{eq:polynomial-dispersion-relation}. Indedd, for deep water
+gravity waves, $a(\xi)= |\xi|^{1/2}$. Also for capillary waves, something
+something. Also the BO equation
+\begin{equation*}
+  u_{t}+ H \partial_{x}^{2}u = 0
+\end{equation*}
+has dispersion relation $a(\xi)=\xi|\xi|$.
+\subsection{Group Velocity}
+\begin{definition}[Wave-Plane Solution]
+  \label{def:wave-plane-solution}
+  A \textbf{wave-plane solution} is the name for functions of the form
+  \begin{equation}
+    \label{eq:wave-plane-solution}
+    u(t,v) = e^{i(kx-wt)}.
+  \end{equation}
+\end{definition}
+\begin{definition}[Wave Number and Angular Frequency]
+  \label{def:wave-number-angular-frequency}
+  The parameter $k$ in \cref{eq:wave-plane-solution} is called the \textbf{wave
+    number}. The parameter $w$ is called the \textbf{angular frequency}.
+\end{definition}
+\begin{example}[Wave-plane solutions for the wave equation]
+  If we plug the function $u$ from \cref{eq:wave-plane-solution} into
+  the wave equation shown in \cref{eq:wave-equation}, we obtain
+  \begin{equation*}
+    -(-iw)^{2}e^{(i(kx-wt))} +(ik)^{2}e^{(i(kx-wt))} =0
+  \end{equation*}
+  which implies that $w^{2}=k^{2}$, and hence that $w(k) = \pm |k|.$
+\end{example}
+\begin{definition}[Group Velocity]
+  The derivative of the dispersion relation with respect to the dwave number is
+  called the \textbf{group velocity}.
+\end{definition}
+\begin{definition}[Dispersive Equation]
+  A PDE is said to be dispersive if $a''(\xi) \neq 0$. 
+\end{definition}
+
+\subsection{Symmetries for Linear Dispersive PDEs}
+\begin{enumerate}
+  \item All are invariant under time and space translations. That is, suppose
+  $\tau$ is the translation operator defined by
+  \begin{equation*}
+    \tau u(t,x) = u(t-t_{0},x-x_{0})
+  \end{equation*}
+  for some fixed $t_{0}$ and $x_{0}$. Then $\tau u$ is a solution provided that
+  $u$ is a solution. 
+  \item Scaling symmetries. For any $\lambda>0$,  the function
+  \begin{equation*}
+    u(t/\lambda^{k},x/\lambda)
+  \end{equation*}
+  is a solution whenever $u(t,x)$ is a solution.
+  \item I think there were more, but my hand got tired and I stopped taking notes.
+\end{enumerate}
 
 \section{Lecture 2: 2022-09-13}
+\subsection{Full Dispersion}
 Recall the dispersion relation $a(\xi)$. If $a''(\xi) \neq 0$ then the PDE is
 said to be \textbf{fully dispersive}. If $\xi\in \R^{d}$ then $\nabla^{2}a(\xi)$
 is the hessian. The appropriate thing to do in that case is to diagonalize...
@@ -152,6 +360,8 @@ we'll get to that.
   symbol $|\xi|$. In one dimension, this is the Hilbert transform.
 \end{example}
 
+
+\subsection{Long-Time Dynamics for Linear Dispersive Waves}
 \Fl{Question:} What are the long time dynamics for linear dispersive waves?
 
 
@@ -262,4 +472,15 @@ a(\xi)$  and $\lambda= t$ gives
   \approx e^{it \left[ v_{\xi}\xi_{0}+ a(\xi_{0}) \right] }\frac{1}{\sqrt{t}}\hat{u}_{0}(\xi_{v})
 \end{equation*}
 with some other things.
+
+\section{2022-09-15: Lecture Notes}
+
+\subsection{Littlewood-Payley Decomposition}
+Let $\phi$ be a smooth radial\footnote{A function $\phi$ is \textbf{radial} iff
+  $\phi(x)=\phi(|x|)$ for all $x$.} function such that
+\begin{equation*}
+  \curly{\text{supp($\phi$ )}\subseteq \left\{\xi\in \R^{n}: 0 \leq |\xi| \leq
+      2\right\}}{\phi\equiv 1 \text{ in }B(0,1)}
+\end{equation*}
+where $B(0,1)\subset \R^{n}$ is the unit ball centered at the origin. 
 \end{document}
