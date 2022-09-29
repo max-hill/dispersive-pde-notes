@@ -62,7 +62,7 @@
 \newcommand{\indep}{\perp \!\!\! \perp}  %independence symbol
 \newcommand{\ifelse}[4]{\left\{ \begin{array}{l@{\quad:\quad}l}#1&#3\\#2&#4\end{array}\right.}
 \newcommand{\curly}[2]{\left\{ \begin{array}{l@{\quad}l}#1\\#2\end{array}\right.}
-
+\newcommand{\di}{\left. \mathrm{Di} \right|}
 
 \usepackage[utf8]{inputenc}
 \usepackage{hyperref}
@@ -480,7 +480,113 @@ Let $\phi$ be a smooth radial\footnote{A function $\phi$ is \textbf{radial} iff
   $\phi(x)=\phi(|x|)$ for all $x$.} function such that
 \begin{equation*}
   \curly{\text{supp($\phi$ )}\subseteq \left\{\xi\in \R^{n}: 0 \leq |\xi| \leq
-      2\right\}}{\phi\equiv 1 \text{ in }B(0,1)}
+      2\right\}}{\phi\equiv 1 \text{ in }B(0,1/2)}
 \end{equation*}
-where $B(0,1)\subset \R^{n}$ is the unit ball centered at the origin. 
+where $B(0,1)\subset \R^{n}$ denotes the unit ball centered at the origin. In
+addition, for each $\xi\in \R^{n}$ define
+\begin{equation*}
+  \psi(\xi):= \phi(\xi)- \phi(2\xi).
+\end{equation*}
+It is easy to see that $\psi$ is a radial function with
+\begin{equation}
+  \label{eq:support-of-psi}
+  \text{supp}(\psi) \subseteq \left\{\xi\in \R^{n}: \frac{1}{2} \leq |\xi| \leq 2\right\}.
+\end{equation}
+We then construct a sequence of functions in the following manner. For each $k\in
+\Z$,  define $\phi_{k}$ by 
+\begin{equation*}
+  \psi_{k}(\xi):= \psi\left(\frac{\xi}{2^{k}}\right), \quad \xi\in \R^n.
+\end{equation*}
+Then the sequence of functions $(\psi_{k})_{k\in\Z}$ is a \textbf{partition of
+  unity}. To see this, observe that
+\begin{align*}
+  J(\xi)
+  &:= \left\{k\in \Z : \psi_{k}(\xi) \neq 0 \right\}\\
+  &= \left\{k\in \Z : \frac{1}{2} \leq |\xi/2^{k}| \leq 2\right\} \\
+  &= \left\{k\in \Z : -1 \leq \log_{2}|\xi| - k \leq 1\right\} \\
+  &= \left\{k : \log_{2}|\xi|-1 \leq k \leq \log_{2}|\xi| +1 \right\}
+\end{align*}
+which is clearly a finite set, and, letting $j:=\lceil \log_{2}|\xi| \rceil-1$,  observe that
+\begin{align*}
+  \sum_{k\in \Z} \psi_{k}(\xi) 
+  &= \sum_{k\in J}\psi_{k}(\xi)\\
+  &= \psi(\xi/2^{j}) + \psi(\xi/2^{j+1})\\
+  &= \phi(\xi/2^{j}) - \phi(\xi/2^{j-1})\\
+  &= 1-0\\
+  &= 1
+\end{align*}
+\begin{definition}[Littlewood-Paley Projection]
+  \label{def:littlewood-paley-projection}
+  For each $k\in \Z$, let $P_{k}$ be the Fourier multiplication operator defined
+  on $L^{2}(\R^{n})$ by the formula
+  \begin{equation*}
+    \widehat{P_{k}f}(\xi)
+    := \psi \left( \xi/2^{k}\right)\hat{f}(\xi)
+  \end{equation*}
+  and define $P_{ \leq k}$ by
+  \begin{equation*}
+    \widehat{P_{ \leq k}f}(\xi) := \sum_{\ell \leq k} \widehat{P_{\ell}f}(\xi)= \phi(\xi/2^{k})\hat{f}(\xi)
+  \end{equation*}
+  for all $f\in L^{2}(\R^{n})$.
+\end{definition}
+\begin{remark}
+  The operators $P_{k}$ and $P_{\leq k}$ are \textbf{almost} projections,  since
+  $\psi(\xi/2^{k})$ is a smooth approxmation of an indicator function (but the
+  tail turns out not to be an issue).
+\end{remark}
+\begin{lemma}[Littlewood-Paley Projection Properties]
+  \label{lem:littlewood-paley-projection-properties}
+  The following properties hold for all $f\in L^{2}(\R^n)$:
+  \begin{itemize}[(i)]
+    \item $P_k= P_{\leq k}-P_{\leq k-1}$ 
+    \item $\lim_{k \to -\infty}P_{\leq k}=0$ and $\lim_{k \to \infty} P_{\leq
+      k}f = f$ in $L^{2}$ 
+    \item $\sum_{k\in \Z}P_{k}f = f$ in $L^{2}$ 
+  \end{itemize}
+\end{lemma}
+\begin{remark}
+  Property (iii) of \cref{lem:littlewood-paley-projection-properties} holds if
+  $f\in L^{p}$ but not in general if $f\in L^{1}_{loc}$. Consider the case in
+  which $f=1$ and $\hat{f}=\delta_{0}$. Then
+  $\text{supp}(\hat{f})=\left\{0\right\}$.
+\end{remark}
+\subsection{Physical Space}
+How are we to interpret $P_{k}$ in physical space?
+\begin{definition}[Dilation Operator]
+  \label{def:dilation-operator}
+  For each $\lambda>1$ and each $1 \leq p \leq \infty$, define an operator
+  $\di_{\lambda}^{p}$ on $L^{2}$ by
+  \begin{equation*}
+    \di_{\lambda}^{p}(f)(x):= \lambda^{-n/p}f(x/\lambda)
+  \end{equation*}
+  for each $x\in \R^n$ and each $f\in L^{2}(\R^n)$. 
+\end{definition}
+\begin{lemma}[Dilation Properties]
+  \label{lem:dilation-properties}
+  The following properties hold:
+  \begin{itemize}
+    \item If $\mathcal{F}$ is the Fourier transform operator, then
+    \begin{equation*}
+      \mathcal{F}\di_{\lambda}^{p} = \di_{\lambda^{-1}}^{q}\mathcal{F}
+    \end{equation*}
+    where $\frac{1}{p}+\frac{1}{q}=1$.
+    \item $\phi(\xi/2^{k})= \di_{2^{k}}^{\infty}\phi(\xi)$ 
+    \item $P_{\leq k}f(x)=\di_{2^{-k}}^{1}\hat{\phi}*f(x) = \int_{\R^m}f(x-y)2^{k}\hat{\phi}(2^{k}y)dy $
+  \end{itemize}
+\end{lemma}
+\begin{remark}
+  I didn't really understand this remark. 
+\end{remark}
+\begin{lemma}
+  Let $k\in \Z$ and let $f$ be a function such that
+  $\text{supp}(\hat{f}) \subseteq \left\{\xi: 2^{k-1}\leq |\xi| \leq
+    2^{k+1}\right\}$. Then
+  \begin{equation*}
+    \norm{\nabla f}_{L^{p}} \sim 2^{k} \norm{f}_{L^{p}}, \quad 1 p\leq \infty
+  \end{equation*}
+  and in particular,
+  \begin{equation*}
+    \norm{P_{k}f}_{L^{p}} \sim 2^{k} \norm{f}_{L^{p}}
+  \end{equation*}
+\end{lemma}
 \end{document}
