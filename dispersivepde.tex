@@ -63,6 +63,8 @@
 \newcommand{\ifelse}[4]{\left\{ \begin{array}{l@{\quad:\quad}l}#1&#3\\#2&#4\end{array}\right.}
 \newcommand{\curly}[2]{\left\{ \begin{array}{l@{\quad}l}#1\\#2\end{array}\right.}
 \newcommand{\di}{\left. \mathrm{Di} \right|}
+\newcommand{\norm}[1]{\Vert #1 \Vert }
+
 
 \usepackage[utf8]{inputenc}
 \usepackage{hyperref}
@@ -578,15 +580,177 @@ How are we to interpret $P_{k}$ in physical space?
   I didn't really understand this remark. 
 \end{remark}
 \begin{lemma}
+  \label{lem:littlewood-paley-Lp-lemma}
   Let $k\in \Z$ and let $f$ be a function such that
   $\text{supp}(\hat{f}) \subseteq \left\{\xi: 2^{k-1}\leq |\xi| \leq
     2^{k+1}\right\}$. Then
   \begin{equation*}
-    \norm{\nabla f}_{L^{p}} \sim 2^{k} \norm{f}_{L^{p}}, \quad 1 p\leq \infty
+    \norm{\nabla f}_{L^{p}} \sim 2^{k} \norm{f}_{L^{p}}, \quad 1 \leq  p\leq \infty
   \end{equation*}
   and in particular,
   \begin{equation*}
     \norm{P_{k}f}_{L^{p}} \sim 2^{k} \norm{f}_{L^{p}}
   \end{equation*}
+  in particular we have
+  \begin{equation}\label{eq:8}
+    \norm{\nabla P_{k}f}_{L^{p}} \sim 2^{k} \norm{P_{k}f}_{L^{p}}
+  \end{equation}
 \end{lemma}
+\section{2022-10-04: Lecture Notes}
+\begin{proof}[Proof of \cref{lem:littlewood-paley-Lp-lemma}]
+  From the notes of last time, we have
+  \begin{equation*}
+    \norm{\nabla f(x)}_{p} \leq  2^{k}\norm{f}_{p}
+  \end{equation*}
+  It remains to prove an inequality in the other direction. Intuitively, we need to ``invert'' $\nabla$. Recall
+  we have
+  \begin{equation*}
+    \widehat{\partial_{x_{j}}f}(\xi) = 2\pi i\xi_{j} \widehat{f}(\xi)
+  \end{equation*}
+  Therefore if $|\xi| \leq  2^{k+2}$, we have
+  \begin{equation*}
+    \phi\left(\frac{\xi}{2^{k+2}}\right)\widehat{\partial_{x_{j}}f}(\xi) = 2\pi i \xi_{j}\widehat{f}(\xi)
+  \end{equation*}
+  then we multiply both sides by $\xi_{i}$ and sum over $j$:
+  \begin{equation*}
+    \sum_{j=1}^{m} \xi_{j}\phi\left(\frac{\xi}{2^{k+2}}\right)\widehat{\partial_{x_{j}}f}(\xi) 
+    = \sum_{j=1}^{m} 2\pi i \widehat{f}(\xi)\xi^{2}_{j}|\xi|^{2}
+    = 2\pi i \hat{f}(\xi)|\xi|^{2}
+  \end{equation*}
+  here $m$ is the dimension ($\xi\in \R^m$). Then (why)
+  \begin{equation*}
+    \widehat{f}(\xi) 
+    = \sum_{j=1}^{m} \frac{\xi_{j}\phi \left( \frac{\xi}{2^{k+2}} \right) \widehat{\partial_{x_{j}}f}(\xi) }{2\pi i |\xi|^{2}} 
+  \end{equation*}
+  Then taking the inverse Fourier transform and using that $\widehat{f}\cdot\widehat{g}=
+  \widehat{f*g}$
+  \begin{equation}\label{eq:4} 
+    f = 2^{-k}\sum_{j=1}^{m}K_{k,j}* \delta_{x_{j}}f 
+  \end{equation}
+  where
+  \begin{align*}
+    K_{k,j} 
+    &= 2^{k}\int \phi \left( \frac{\xi}{2^{k+2}}
+      \right)\frac{\xi_{j}}{2\pi i |\xi|^{2}} e^{2\pi i x \cdot \xi} d\xi\\
+    &=2^{nk} \int \phi \left( \frac{\xi}{2^{2}} \right) \frac{\xi_{j}}{2\pi i |\xi|^{2}}e^{\pi i 2^{k}\cdot x\cdot \xi}d\xi 
+  \end{align*}
+  where the second equality follows by a change of variable. In particular, we
+  have
+  \begin{equation*}
+    \left| K_{k,j}(x) \right| \lesssim 2^{nk}
+  \end{equation*}
+  where the squiggly inequality hides some constants. Note that we can write our
+  formula as
+  \begin{align*}
+    K_{k,j}(x) 
+    &=2^{nk} \int \phi \left( \frac{\xi}{4} \right)\frac{\xi_{j}}{2\pi i |\xi|^{2}}\partial_{\xi} \left( \frac{e^{2 \pi i 2^{k}}x\cdot\xi}{2 \pi i 2^{k} x} \right)   ds\\
+  \end{align*}
+  which suggests an integration by parts. Integrating by parts $s$ times, we obtain
+  \begin{equation*}
+    \left| K_{k,j}(x) \right| \lesssim 2^{nk} \left| 2^{k}x \right|^{-s}
+  \end{equation*}
+  for $s>0$. Here $K_{k,j}$ is like an approximation of identity. Finally,
+  applying the Minkowski inequality to \cref{eq:4}, we get
+  \begin{equation*}
+    \norm{\nabla f}_{L^{p}}\geq 2^{k} \norm{f}_{L^{p}},
+  \end{equation*}
+  as required.
+\end{proof}
+
+\begin{remark}[Singularity at zero]
+  There is some question about a singularity at zero. But this is not an issue
+  since under the hypotheses of \cref{lem:littlewood-paley-Lp-lemma}, the
+  function $\hat{f}$ is zero in a neighborhood of zero. 
+\end{remark}
+
+\begin{remark}
+  We will use the notation $f_{k}:=P_{k}f$. Morally at the level of $L^{p}$,
+  $ \norm{\nabla f_{k}}_{p}\sim \norm{f_{k}}_{L^{p}}$ so heuristically,
+  $\nabla\sim \sum_{k}2^{k}P_{k}$. This might become clear later.
+\end{remark}
+
+Now we want to connect $P_{k}(f)$ on $P_{ \leq k}f$ to $f$ itself. We have
+\begin{enumerate}
+  \item
+  $\norm{P_{ \leq k}f}_{L^{p}}\leq \int_{\R^m} \norm{f(x-2^{-k}y)}_{L^{p}}
+  \left| \widehat{\phi}(y) \right|dy \lesssim \norm{f}_{L^{p}}$ also
+  \rnote{check this}
+  $\widehat{P_{ \leq k}}\widehat{f} = \phi(\xi/2^{k})\hat{f}(\xi)$ implies
+  \begin{equation}\label{eq:6}
+    \norm{P_{ \leq k}f}_{L^{p}} \leq \norm{f}_{L^{p}}
+  \end{equation}
+  \item (Cheap $L^{p}$ inequality): By Minkowski inequality, since
+  \begin{equation*}
+    f= \sum_{k} P_{k}f 
+  \end{equation*}
+  implies
+  \begin{equation*}
+    \sup_{k} \norm{P_{k}f}_{p} \lesssim \norm{f}_{p} \leq \sum_{k}\norm{P_{k}f}_{p} 
+  \end{equation*}
+\end{enumerate}
+
+There is a way to elegantly prove the Sobolev embeddings using Littlewood-Paley.
+The idea will be to prove it for a dyadic piece.
+\begin{lemma}[Non-endpoint Sobolev Embedding]
+  \label{lem:non-endpoint-sobolev-embedding}
+  Let $1 \leq p<q \leq \infty$ such that $\frac{1}{p}-\frac{1}{n}>\frac{1}{2}$.
+  Then
+  \begin{equation}\label{eq:5}
+    \norm{f}_{L^{q}(\R^n)} \leq C_{p,q,n} \norm{f}_{L^{p}(\R^n)} + \norm{\nabla f}_{L^{p}(\R^n)}
+  \end{equation}
+  for all $f\in L^{p}(\R^n)$ such that the right hand side is finite. Here,
+  $C_{p,q,n}$ is a constant which depends only on $p,q,$ and $n$. 
+\end{lemma}
+\begin{remark}
+  The endpoint version is when $\frac{1}{p}-\frac{1}{n}=\frac{1}{2}$.  The proof
+  will be similar but with some added complications. See Evans.
+\end{remark}
+\begin{proof}[Proof of \cref{lem:non-endpoint-sobolev-embedding}]
+  Let $f$ be a Schwarz function, and denote the right hand side of \cref{eq:5}
+  by $X$. Then by \cref{eq:6},
+  \begin{equation}\label{eq:10}
+    \norm{P_{k}f}_{p} \leq  X 
+  \end{equation}
+  for all $k$, and also
+  \begin{equation*}
+    \norm{\nabla P_{k}f}_{p} \leq \norm{\nabla f}_{p} \leq  X.
+  \end{equation*}
+  Also, by \cref{eq:8} from \cref{lem:littlewood-paley-Lp-lemma}, we have
+  \begin{equation}\label{eq:9}
+    \norm{P_{k}f}_{p} \lesssim 2^{-k} X
+  \end{equation}
+  By \cref{eq:9,eq:10}, we havem
+  \begin{equation*}
+    \norm{P_{k}f}_{ L^{p}} \lesssim \min \left\{1,2^{-k}\right\}X
+  \end{equation*}
+  Note taht if $|\xi|\sim 2^{k}$ then $2^{k-1} \leq |\xi| \leq 2^{k+1}$. What is
+  the $L^{q}$ norm of $f$? Since $q>p$,  we use Bernstein's inequality, which
+  states that
+  \begin{equation*}
+    \norm{P_{k}f}_{q} \leq 2^{\left( \frac{1}{p}-\frac{1}{q} \right)kn }\norm{P_{k}f}_{L^{p}}.
+  \end{equation*}
+  We will prove this proof later. It follows that
+  \begin{equation*}
+    \norm{P_{k}f}_{q} \lesssim 2^{\left( \frac{1}{p}-\frac{1}{q} \right)kn }\min \left\{1,2^{-k}\right\}X
+  \end{equation*}
+  then consideration of the cases where $k\to \pm \infty$, we find that the
+  coefficient decays and the maximum value is when $k=0$. Then summing over
+  $k$'s gives the result.
+\end{proof}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 \end{document}
+
