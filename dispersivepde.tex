@@ -893,6 +893,163 @@ We have $\widehat{\nabla f}(\xi)=2\pi i \xi \hat{f}(\xi) $ and we define
 similarly, $\widehat{|\nabla| f}(\xi)=2\pi i |\xi| \hat{f}(\xi) $  and the
 Japanese bracket notation is defined similarly.
 
+\section{2022-10-09: Make-Up Lecture}
+In this lecture, we will discuss Stricharz estimates. These will be particular
+to each dispersive equation. For example, nonlinear schrodinger equation has its
+own Strichartz estimates which ar edifferent from, say,  those for the
+Benjamin-Ono equtions or the wave equations. For your own equations, you'll need
+to derive it.
 
+\begin{remark}[Notation]
+  For $t\in \R$ and $x\in \R^n$, denote
+  \begin{equation*}
+    \norm{u}_{L_{t}^{q}L_{X}^{r}}:= \left(  \int_{\R} \left[ \int_{\R^d}\left| u(t,x) \right|^{r}dx \right]^{\frac{1}{r}\cdot q}dt  \right) \frac{1}{q}
+  \end{equation*}
+\end{remark}
+Let's consider the Schordinger equation
+\begin{equation}\label{eq:nonlinear-schrodinger}
+  \left\{ \begin{array}{l@{\quad\quad}l}
+      i\partial_{t}u(t,x) +\Delta u(t,x) = 0 \\
+      u(0,x)=u_{0}(x) 
+    \end{array}\right.
+\end{equation}
+and for simplicity we will assume that $u_{0}(x)$ is a Shwartz function so that
+$u(t,x)$ is Schwartz for all $x,t$.
+
+Apply the Fourier transform in space to \cref{eq:nonlinear-schrodinger}.
+\begin{equation*}\label{eq:transformed-nonlinear-schrodinger}
+  \left\{ \begin{array}{l@{\quad\quad}l}
+      i\widehat{u_{t}}(t,\xi) = |\xi|^{2}\widehat{u}(t,\xi)  \\
+      \widehat{u}(0,\xi)=\widehat{u_{0}}(\xi) 
+    \end{array}\right.
+\end{equation*}
+This is a seperable equation with respect to $t$. Separating gives:
+\begin{equation*} 
+  \frac{d\widehat{u}}{\widehat{u}} = -i |\xi|^{2}dt.
+\end{equation*}
+and integrating gives
+\begin{equation*}
+  \log \widehat{u} = -i |\xi|^{2}t+C
+\end{equation*}
+which ipmles that
+\begin{equation*}
+  \widehat{u}(t,\xi) = e^{-i |\xi|^{2}t}\widehat{u_{0}}(\xi)
+\end{equation*}
+and inverting the Fourier transform gives
+\begin{align*}
+  u(t,x) 
+  &= \mathcal{F}^{-1}\left[ e^{-i|\xi|^{2}t} \widehat{u_{0}}(\xi) \right]\\
+  &= \left( 2\pi \right)^{d/2}  \mathcal{F}^{-1}\left[ e^{-i|\xi|^{2}t}  \right]*u_{0}(x)
+\end{align*}
+Therefore it remains to compute $\mathcal{F}^{-1}\left[ e^{-i|\xi|^{2}t}\right]
+$. We did this in a previous class.
+
+We have a solution operator $S(t)=e^{it\Delta}$ \pnote{is this correct?} which is
+\begin{align}\label{eq:7}
+  S(t)u_{0}(x) 
+  &= \left( 2\pi \right)^{d/2} \mathcal{F} \left[ e^{-t|\xi|^{2}i} \right]*u_{0}(x)\nonumber\\
+  &= \left( 4\pi it \right)^{-d/2} \int_{\R^d}e^{\frac{i|x-y|^{2}}{4t}}u_{0}(y)dy 
+\end{align}
+The operator $e^{it\Delta}$ is the linear Schrodinger operator. Now we can
+derive the dispersive estimate. First, observe that
+\begin{align}\label{eq:A}
+  \norm{u}_{\infty}
+  &=\norm{e^{it\Delta}u_{0}}_{L^{\infty}(\R^d)}\nonumber\\
+  &\lesssim |t|^{-\frac{d}{2}}\int_{\R^d}\left| u_{0}(y) \right| dy \nonumber\\
+  &=\left| t \right|^{-\frac{d}{2}}\norm{u_{0}}_{L^{1}(\R^d)}
+\end{align}
+Second, observe that,
+\begin{equation}\label{eq:B}
+  \norm{e^{it\Delta}u_{0}}_{L^{2}}= \norm{u}_{L^{2}_{x}}^{2}= \norm{u_{0}}_{L^{2}_{x}}
+\end{equation}
+\pnote{somehow the second equality is obvious from \cref{eq:A}}
+so that
+\begin{equation*}
+  \norm{u}_{H^{s}}=\norm{u_{0}}_{H^{s}} 
+\end{equation*}
+Interpolating \cref{eq:A,eq:B} gives, for all  $2 \leq p \leq \infty$, 
+\begin{equation*}
+  \norm{e^{it\Delta}}_{L^{p}\R^d}  \leq |t|^{-\left( \frac{d}{2}-\frac{d}{p} \right) }\norm{u_{0}}_{L^{p'}}
+\end{equation*}
+where $p'$ is the Holder conjugate of $p$.
+
+Difference between $\dot{H}^{s}$  and $H^{s}$.
+\section{2022-10-11: Lecture}
+\begin{theorem}[Strichartz] \label{thm:strichartz}
+  Assume we have $q,r$ a Stricharz admissible pair with $2 \leq q,r \leq
+  \infty$.Then for $(q,r)$ and $(\tilde{q},\tilde{r})$ we have $(q,\infty,2)
+  \neq (q,r,d)$, $\frac{2}{q}+\frac{d}{r}=\frac{d}{2}$. Then
+  \begin{itemize}
+    \item From Str. Est
+    \begin{equation*}
+      \norm{e^{i\Delta t}u_{0}}_{L^{q}L^{r}(\R\times \R^{d})}\lesssim C_{d,q,r} \norm{u_{0}}_{L^{2}_{x}}
+    \end{equation*}
+    \item From dual form of Str.: $\norm{\int_{\R}e^{is\Delta}F(s)ds
+    }_{L^{2}_{x}}\lesssim_{d,\tilde{q},\tilde{r}}\norm{F}_{L^{\tilde{q}}L^{\tilde{r}}}$
+    \item Inform str est
+    \begin{equation*}
+      \norm{\int_{t'<t}i(t-t')F(t')ds }_{L^{q}L^{r}}\lesssim_{d,q,r,\tilde{q},\tilde{r}}\norm{F}_{L^{\tilde{r}'L^{\tilde{q}'}}}
+    \end{equation*}
+  \end{itemize}
+\end{theorem}
+\begin{proof}
+  $TT^{*}$ argument. Here $T:H \to B$,  $TT^{\infty}:B' \to B$,  $T^{*}:B' \to
+  H'$ we have
+  \begin{equation*}
+    \norm{T}<\infty \iff \norm{TT^{*}}<\infty \iff \norm{T^{*}}<\infty
+  \end{equation*}
+  and here we have $T=e^{it\Delta}$.  We want to show that (1) $T:L^{2} \to
+  L^{q}L^{r'}$. I will do the $TT^{*}$ bound. Here
+  \begin{equation*}
+    TT^{*}:L^{q'}L^{r'} \to L^{q}L^{r}
+  \end{equation*}
+  and we want to show this is truly the mapping domains and range. What is the
+  adjoint of $T^{*}$? What do we usually do to find the adjoint? We look at the
+  inner product and we move things. Our inner product is
+  \begin{align*}
+    \left\langle f,T^{*}G \right\rangle_{L_{t}^{2}L_{x}^{2}}
+    &=\left\langle Tf,G \right\rangle_{L_{x}^{2}}\\
+    &= \int \int e^{it\Delta}f\overline{G(t,x)}dxdt\\ 
+    &= \int f \int \overline{e^{-it\Delta}G(t,x)}dxdt
+  \end{align*}
+  so that $T^{*} = \int e^{-it \Delta }G(t,x)dt $
+\end{proof}
+Using the dispersive estimate for the Schrodinger equation from earlier
+\begin{align*}
+  \norm{TT^{*}F}_{L^{q}_{t}L_{x}^{r}} 
+  &= \norm{ e^{it \Delta}e^{-is \Delta}F} \\
+  &= \norm{e^{i(t-s)\Delta}F}_{L^{q}L^{r}_{x}} \\
+  &\lesssim \norm{\left| t-s \right|^{-\left( \frac{d}{2}-\frac{d}{r} \right) }\norm{F(s)}_{L^{r'}}ds}_{L^{q}_{t}} \\
+  &= \norm{ \left| t \right|^{-2/q}* \norm{F(t)}_{L^{r'}}}_{L^{q}_{t}}
+\end{align*}
+at the end of the day, using some Littlewood Hardy Sobolev inequality, we get an
+upper bound
+\begin{equation*}
+  \norm{F}_{L^{q'}L^{r'}}
+\end{equation*}
+and we get
+\begin{equation*}
+  \norm{TT^{*}}_{L^{q'}L^{r'}}\to L^{q}L^{r}<\infty
+\end{equation*}
+this proves the second part of \cref{thm:strichartz}. And first part follow from
+something.
+
+We will apply the following lemma with $K$ as the schrodinger operator.
+
+\begin{lemma}[Christ-Kiselev]
+  \label{lem:christ-kiselev}
+  Suppose $X,Y$ are Banach spaces and $T:L^{p}(\R,X)\to L^{q}(\R,Y)$
+  where $1 \leq p < q <\infty$ which is given by the integral transform
+  \begin{equation*}
+    Tf(t) = \int_{\R}K(t,s)f(s)ds 
+  \end{equation*}
+  where $K:\R\times\R \to \mathcal{S}(X,Y)$ 
+\end{lemma}
+\pnote{Need to fix this part.}
+
+\subsubsection{Bilinear Strichartz estimates}
+We have linear Sch equation  ($i \partial_{t}u = - \Delta u $). Two intial data
+$v_{0},u_{0}$ both of which are scharz functions. \pnote{missed the last 15
+  minutes of this lecture}
 \end{document}
 

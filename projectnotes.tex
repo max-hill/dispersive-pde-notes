@@ -1,0 +1,138 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+
+% Math Packages
+\usepackage{amsmath, mathtools}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{bbm}
+\usepackage{breqn}
+\usepackage[margin=1in]{geometry}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{forest}
+\usepackage{tikz-qtree}
+\graphicspath{ {./images/} }
+\usepackage{hyperref}
+\usepackage[shortlabels]{enumitem}
+\usetikzlibrary{arrows,matrix,positioning}
+\usepackage[ruled,vlined]{algorithm2e}
+% References
+\usepackage[capitalize]{cleveref}
+
+% This code makes widecheck for Fourier transform. Usage: \widecheck{blah blach}
+\makeatletter
+\DeclareRobustCommand\widecheck[1]{{\mathpalette\@widecheck{#1}}}
+\def\@widecheck#1#2{%
+  \setbox\z@\hbox{\m@th$#1#2$}%
+  \setbox\tw@\hbox{\m@th$#1%
+    \widehat{%
+      \vrule\@width\z@\@height\ht\z@
+      \vrule\@height\z@\@width\wd\z@}$}%
+  \dp\tw@-\ht\z@
+  \@tempdima\ht\z@ \advance\@tempdima2\ht\tw@ \divide\@tempdima\thr@@
+  \setbox\tw@\hbox{%
+    \raise\@tempdima\hbox{\scalebox{1}[-1]{\lower\@tempdima\box
+        \tw@}}}%
+  {\ooalign{\box\tw@ \cr \box\z@}}}
+\makeatother
+
+% Colorful Notes
+\usepackage{color}
+\definecolor{Red}{rgb}{1,0,0}
+\definecolor{Blue}{rgb}{0,0,1}
+\definecolor{Purple}{rgb}{.5,0,.5}
+\def\red{\color{Red}}
+\def\blue{\color{Blue}}
+\def\gray{\color{gray}}
+\def\purple{\color{Purple}}
+
+\newcommand{\rnote}[1]{{\red [#1] }} % \rnote{foo} then 'foo' is red
+\newcommand{\bnote}[1]{{\blue #1}} % \bnote{foo} then 'foo' is blue
+\newcommand{\gnote}[1]{{\gray [#1]}} % gray note  -- for comments
+\newcommand{\pnote}[1]{{\purple [#1]}} % green note  -- for comments
+
+% Math Environments
+\newtheorem{theorem}{Theorem}
+\newtheorem{definition}{Definition}
+\newtheorem{assumption}{Assumption}
+\newtheorem{lemma}{Lemma}
+\newtheorem{remark}{Remark}
+\newtheorem{prop}{Proposition}
+\newtheorem{corollary}{Corollary}
+\newtheorem{example}{Example} 
+\newtheorem{question}{Question}
+\newtheorem{claim}{Claim} 
+\newtheorem{conjecture}{Conjecture} 
+
+% Custom Math Commands
+\newcommand{\vt}{\vskip 5mm} % vertical space
+\newcommand{\fl}{\noindent\textbf} % first line
+\newcommand{\Fl}{\vt\noindent\textbf} % first line with space above
+\def\R{\mathbb{R}} % Real numbers
+\def\Z{\mathbb{Z}} % Integers
+\def\E{\mathbb{E}} % Expectation
+\def\P{\mathbb{P}} % Probability
+\def\Q{\mathbb{Q}} % Q probability
+\newcommand{\indep}{\perp \!\!\! \perp}  %independence symbol
+\newcommand{\ifelse}[4]{\left\{ \begin{array}{l@{\quad:\quad}l}#1&#3\\#2&#4\end{array}\right.}
+\newcommand{\curly}[2]{\left\{ \begin{array}{l@{\quad}l}#1\\#2\end{array}\right.}
+\newcommand{\di}{\left. \mathrm{Di} \right|}
+\newcommand\norm[1]{\left\lVert#1\right\rVert}
+
+\usepackage[utf8]{inputenc}
+\usepackage{hyperref}
+\usepackage{amsmath}
+\usepackage[shortlabels]{enumitem}
+\newtheorem{problem}{Problem}
+
+% Concise Vector Macro: write bracket vectors of arbitrary length
+% Usage: \columnvector{x,y,1} or \columnvector{2,x^2}
+\usepackage{stackengine}
+\newcommand\columnvector[1]{\setstackEOL{,}\bracketVectorstack{#1}}
+
+
+\title{Lecture Notes for Mihaela Ifrim's Course on Dispersive PDE}
+\date{Fall 2022}
+
+
+\begin{document}
+\title{Project on Dodson 2013}
+\author{Max Hill}
+\newpage
+
+\section{Introduction and Definitions}
+\begin{definition}[Inhomogeneous Sobolev Space $H^{s}$]x
+  \label{def:inhomogeneous-sobolev-space-hs}
+  \begin{equation*}
+    H^{s}(\R^n):= \left\{ f\in L^{2}(\R^n): \partial^{\alpha}f\in L^{2}(\R^n)
+      \text{ for all }|\alpha| \leq s\right\}
+  \end{equation*}
+\end{definition}
+
+We are interested in the 3-dimensional Schrodinger equation
+\begin{equation}\label{eq:the-equation}
+  \curly{iu_{t}+\Delta u=|u|^{2}u}{u(0,x)=u_{0}(x)\in H^{s}(\R^3)}.
+\end{equation}
+
+\begin{definition}[Well-Posedness]
+  \cref{eq:the-equation} is said to be well-posed on an interval $0\in I\subset
+  \R$, for $u_{0}\in H^{s}(R^{3})$ if the following three conditions hold
+  \begin{enumerate}
+    \item A strong solution to \cref{eq:the-equation} exists,
+    \begin{equation}\label{eq:the-solution}
+      u(t) = e^{it\Delta}u_{0}-i \int_{0}^{t}e^{i(t-\tau)\Delta}(|u|^{2}u)(\tau)d\tau 
+    \end{equation}
+    \item $u(t)$ is unique, and 
+    \item for any compact $J \subset I$, the map from the initial date to the
+    solution of \cref{eq:the-equation} is continuous, i.e., the map
+    \begin{align*}
+      H^{s}(\R^{3})&\to L_{t}^{\infty}H_{s}^{s}(J\times \R^{3})\cap L_{t,x}^{5}(J\times \R^{3})\\
+      u_{0}&\mapsto u(t)
+    \end{align*}
+    is continuous
+  \end{enumerate}
+\end{definition}
+\end{document}
+
