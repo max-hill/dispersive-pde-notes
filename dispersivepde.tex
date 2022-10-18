@@ -1052,5 +1052,176 @@ We have linear Sch equation  ($i \partial_{t}u = - \Delta u $). Two intial data
 $v_{0},u_{0}$ both of which are scharz functions. \pnote{missed the last 15
   minutes of this lecture}
 
+
+\section{Lecture: 2022-10-18}
+At this point we all should know Duhamel's principle, which is what we did last
+time. In general, for any PDE of the form
+\begin{equation*}
+  \left\{ \begin{array}{l@{}l}
+      \partial_{t} u - Lu = N(u) \\
+      u_{0} = u(0)
+    \end{array}\right.
+\end{equation*}
+where $N(u)$ is nonlinear (and with the right $L$, which can be used for energy
+estimates), Duhamel's principle states that your solution will be of the form
+\begin{equation}\label{eq:duhamel-general}
+  u(t,x) = \underbrace{e^{tL}\mu_{0}}_{\text{linear PDE}}+
+  \underbrace{\int_{0}^{t}e^{(t-s)L}N(u(s))ds }_{\text{The Duhamel term.
+      Inhomogenous. Call it $DN(u)$.}}
+\end{equation}
+
+When studying local wellposedness (LWP) for NLS (Nonlinear Schrodinger - semilinear). There is a huge
+difference when studying LWP for quasilinear versus semilinear PDEs, and even
+more so when the LPW theory is done in a low-regularity setting. In particular,
+in the low regularity setting we cannot use the same techniques as were used in
+the semilinear case. Thus the methods for proving LWP differ in these settings:
+
+For the semilinear case, we use a \textbf{fixed point argument.} This
+may work even in a low regularity setting (depending on the PDE you are
+using). This technique may work for quasilinear equations, but only in the
+high-regularity setting. The form of \cref{eq:duhamel-general} suggests a
+perturbative method. We can reformulate our problem as
+\begin{equation}\label{eq:11}
+  u(t,x) = u_{\text{linear}} + DN(u)
+\end{equation}
+
+\begin{theorem}[Contraction mapping argument]
+  Start with two Banach spaces $\mathcal{S}$ (not the Shwarz space) and
+  $\mathcal{N}$. Suppose $D:\mathcal{N}\to \mathcal{S}$  is a linear operator
+  such that there exists a positive constant $C_{0}>0$ such that
+  \begin{equation*}
+    \norm{DF}_{\mathcal{S}} \leq C_{0} \norm{F}_{\mathcal{N}}
+  \end{equation*}
+  for all $F\in \mathcal{N}$, and further suppose we have a nonlinear operator
+  \begin{equation*}
+    N:\mathcal{S} \to \mathcal{N}
+  \end{equation*}
+  such that $N(0)=0$ and such that $N$ satisfies the Lipschitz bound
+  \begin{equation*}
+    \norm{N(u)- N(v)}_{\mathcal{N}} \leq  \frac{1}{2C_{0}}\norm{u-v}_{\mathcal{S}}
+  \end{equation*}
+  where $u,v\in B_{\epsilon}= \left\{ u\in \mathcal{S}:\norm{u}_{\mathcal{S}}\leq \epsilon\right\}$ for $\epsilon>0$. Then
+for all 
+$u_{\rm lin}\in B_{\epsilon/2}$ there exists a unique solution
+\begin{equation*}
+  u\in B_{\epsilon}
+\end{equation*}
+which is a solution to \cref{eq:11}, with the map
+\begin{equation*}
+  u_{0} \mapsto u
+\end{equation*}
+is Lipschitz with constant at most $2$. In particular, we have
+\begin{equation*}
+  \norm{u}_{\mathcal{S}}\leq 2 \norm{u_{\rm lin}}_{\mathcal{S}}
+\end{equation*}
+\end{theorem}
+\begin{example}[Nonlinear Schrodinger]
+  Suppose we have the equation
+  \begin{equation*}
+    \left(i\partial_{t}+\frac{\Delta}{2}\right)u = |u|^{p-1}u
+  \end{equation*}
+  where $u:\R^{1+d}\to \mathbb{C}$, i.e. $u:[-T,T]*\times \R^{d}\to \mathbb{C}$.
+  Then LWP in $e_{t}^{0}H^{s}\to \mathcal{N}$ in $L^{2}$ \pnote{missed something
+  here}.
+\end{example}
+
+Consider the equation
+\begin{equation}\label{eq:12}
+  \left\{ \begin{array}{l@{}l}
+      u_{t}+ \frac{1}{2}\Delta u = \mu|u|^{p-1}p \\
+      u(t_{0},x)=u_{0}(x)\in H_{x}^{s}(\R^d)
+    \end{array}\right.
+\end{equation}
+where we choose $p$ to be prime (e.g. $p=3$ is called the \textbf{cubic NLS}, $p=5$ is
+the \textbf{quintic NLS}) as this often corresponds to something physcially relevant. If
+$\mu=0$ there is no nonlinearity. If $\mu=+1$ or $\mu=-1$, these are called the
+\textbf{focusing} and \textbf{defocusing} cases respectively. The focusing case
+will not play a role for the rest of this lecture, but will come into play when
+proving global well-posedness. If you want to prove global well-posedness you
+have to show that (1) your solution in the nonlinear case looks like the linear
+case, or (2) your solution splits into two bits: a soliton and a solution to
+your linear probem. However, for LWP (the topic of this lecture), the sign of
+$\mu$ doesn't make much a difference (because we'll be taking absolute values).
+
+The nonlinearity in \cref{eq:12} doesn't look too bad because it's a polynomial,
+but it's still a nonlinearity. We will study this problem on the real line, i.e.
+we are looking for a solution
+\begin{equation*}
+  u:[-T,T]\times R^{d} \to \mathbb{C}
+\end{equation*}
+and we want to show that such a solution exists. Then if we can make $T$ large
+enough, we'll have a global solution.
+
+We need to determine the regularity of the space we will be working on. Terry
+does a great job in Chapter 3 of discussing all the ways that you can treat this
+problem. You can treat it classically, or that you have solutions in a
+distributional sense, etc. There are multiple ways to think about this, so we
+need to be precise about what we mean by local well-posedness. This problem has
+many symmetries. To find scaling symmetry, we rescale our solutions
+\begin{align*}
+  &u(t,x) \to \lambda^{\alpha}u(t\lambda^{\beta},x\lambda^{\gamma})\\
+  &u_{0}(x) \to  \lambda^{\alpha}u_{0}(x\lambda^{\gamma})
+\end{align*}
+where $\lambda>0$. For our problem in particular, we will use
+\begin{align*}
+  &u(t,x) \to \lambda^{-\frac{2}{p-1}}u\left(\frac{t}{\lambda^{2}},\frac{x}{\lambda}\right)\\
+  &u_{0}(x) \to \lambda^{-\frac{2}{p-1}}u_{0}\left( \frac{x}{\lambda} \right) 
+\end{align*}
+so that 
+\begin{equation*}
+  \norm{u_{0}(x)}_{\dot{H}^{s_{c}}} = \norm{\lambda^{-\frac{2}{p-1}}u_{0} \left( \frac{x}{\lambda} \right)}_{\dot{H}^{s_{c}}}
+\end{equation*}
+where $s_{c}= \frac{d}{2}-\frac{2}{p-1}$. The critical value $s_{c}$ is the
+threshold for the lowest regularity for which we can achieve a LWP result.
+
+In this context, the terminology is as follows. The case in which $s>s_{c}$ is
+called \textbf{subcritical}. Subcritical LWP theory is not that bad. The case
+when $s=s_{c}$ is called \textbf{critical}. The case when $s<s_{c}$ is called
+\textbf{supercritical}. Supercritical LWP theory is harder.
+
+In general, showing LWP means showing
+\begin{enumerate}
+  \item Existence of a solution (e.g. by a contraction mapping argument for
+  semilinear problems; different story for quasilinear problem) in
+  $C_{t}^{0}[-T,T]H_{x}^{s}$.
+  \item Uniqueness of solutions in the same regularity class (easy for both
+  semi- and quasi-linear).
+  \item Continuous dependence on the initial data (we call this continuous
+  dependence, but when dealing with semilinear PDEs what we really need is
+  Lipschitz continuity). That is, we want the map
+  \begin{equation*}
+    u_{0}\to u
+  \end{equation*}
+  to be continuous.
+\end{enumerate}
+
+Recall the Benjamin-Ono equation $u_{t}+H\partial_{x}^{2}u=uu_{x}$, which is
+semilinear, but behaves more like a quasilinear problem in low regularity.
+
+\begin{definition}[Well-Posedness]
+  \label{def:local-well-posedness}
+  We say the NLS is \textbf{locally well-posed (LWP)} in $H_{x}^{s}(R^{d})$ if
+  for any $u^{*}_{0}\in H_{x}^{s}(\R)$, there exists a time $T>0$ and an open
+  ball $B\subset H_{x}^{s}$ containing $u_{0}^{*}$, and
+  $X\subset C_{t}^{0}H_{x}^{s}([-T,T]\times \R)$ such that for each $u_{0}\in B$
+  there exists a strong unique solution $u\in X$ to the integral equation
+  associated to hte NLS via Duhamel formulation, and furthermore, the map
+  $u_{0}\to u$ is continuous from $B$ to $X$.
+  \begin{itemize}
+    \item If, in addition $ X=C_{t}^{0}H_{x}^{s}[-T,T\times \R^{d}]$ from this
+    $H_{x}^{s}$-well posedness is \textbf{unconditional}.
+    \item If $T$ can be arbitrarily large, then we have \textbf{global
+      well-posedness}. If $T$ only one $H_{x}^{s}$ of the $u_{0}$ then we say we
+    hañve WP in the \textbf{subcritical sense}. \pnote{fix this}
+    \item If $u_{0}\to u$ is uniformly continuous from $B$ to $X$ then we call
+    it \textbf{uniform well-posedness}.
+  \end{itemize}
+\end{definition}
+
+
+
+
+
+  
 \end{document}
 
