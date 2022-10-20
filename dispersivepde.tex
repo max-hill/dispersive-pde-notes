@@ -1201,15 +1201,15 @@ semilinear, but behaves more like a quasilinear problem in low regularity.
 \begin{definition}[Well-Posedness]
   \label{def:local-well-posedness}
   We say the NLS is \textbf{locally well-posed (LWP)} in $H_{x}^{s}(R^{d})$ if
-  for any $u^{*}_{0}\in H_{x}^{s}(\R)$, there exists a time $T>0$ and an open
+  for any $u^{*}_{0}\in H_{x}^{s}(\R^{d})$, there exists a time $T>0$ and an open
   ball $B\subset H_{x}^{s}$ containing $u_{0}^{*}$, and
-  $X\subset C_{t}^{0}H_{x}^{s}([-T,T]\times \R)$ such that for each $u_{0}\in B$
+  $X\subset C_{t}^{0}H_{x}^{s}([-T,T]\times \R^{d})$ such that for each $u_{0}\in B$
   there exists a strong unique solution $u\in X$ to the integral equation
   associated to hte NLS via Duhamel formulation, and furthermore, the map
   $u_{0}\to u$ is continuous from $B$ to $X$.
   \begin{itemize}
-    \item If, in addition $ X=C_{t}^{0}H_{x}^{s}[-T,T\times \R^{d}]$ from this
-    $H_{x}^{s}$-well posedness is \textbf{unconditional}.
+    \item If, in addition $ X=C_{t}^{0}H_{x}^{s}\left( [-T,T]\times \R^{d} \right) $ from this
+    $H_{x}^{s}$-well posedness is \textbf{unconditional}. \pnote{This isn't correct?}
     \item If $T$ can be arbitrarily large, then we have \textbf{global
       well-posedness}. If $T$ only one $H_{x}^{s}$ of the $u_{0}$ then we say we
     hañve WP in the \textbf{subcritical sense}. \pnote{fix this}
@@ -1219,9 +1219,145 @@ semilinear, but behaves more like a quasilinear problem in low regularity.
 \end{definition}
 
 
+\section{Lecture Notes: 2022-10-20}
+Recall
+\begin{equation}\label{eq:nonlinear-schrodinger-equation}
+  \left\{
+    \begin{array}{l@{}l}
+      iu_{t} +\frac{\Delta}{2}u=\left| u \right|^{p-1}u\\
+      u(0,x) = u_{0}(x)
+    \end{array}
+  \right.
+\end{equation}
+has solution
+\begin{equation*}
+  u(t,x)= e^{i(t-t_{0})}\frac{\Delta}{2}u(t_{0}) - i\mu \int_{t_{0}}^{t}e^{i(t-s)\frac{\Delta}{2}}F(s)ds 
+\end{equation*}
+where $F(s) = |u(s,x)|^{p-1}u(s,x)$.
+
+We will discuss classical solutions (LWP) on $[-T,T]$ or $[0,T]$. This means our
+solutions are going to be continuous in time and space. Our initial data is in
+$H_{x}^{s}(R^{d})$, $s\in\R$ where $s>d/2$. Sobolev embedding will give
+continuity. The critcal threshold is $s_{c}=\frac{d}{2}-\frac{2}{p-1}$.
 
 
+\begin{remark}
+  Critical case means the time interval on which the solution is defined depends
+  on the size of your initial data. If your data is small (i.e. is in a certain
+  ball around $0$, then you have a unique solution. )
+\end{remark}
 
+The next theorem will use the fact that $H_{x}^{s}(R^{d})$ is an algebra for
+certain values of $s$, depending on $d$.  This follows from the inequality
+\begin{equation}\label{eq:Hs-algebra-inequality}
+  \norm{fg}_{H^{s}_{x}} 
+  \lesssim \norm{f}_{H^{s}_{x}}\norm{g}_{H_{x}^{s}}
+\end{equation}
+In the subcritical case, the inequality \cref{eq:Hs-algebra-inequality} will not
+hold. We will use Strichartz estimates instead.
+
+\begin{theorem}[Classical NLS solutions]
+  \label{thm:classical-nls-solutions}
+  Let $p>1$ be a prime number, $s\in \R$ such that $s>d/2$, and $\mu=\pm 1$.
+  Then \cref{eq:nonlinear-schrodinger-equation} is unconditionally well-posed in $H_{x}^{s}(\R^d)$ in the
+  subcritical sense: for all $R>0$ there exists $T=T(s,d,p,R)>0$ such that
+  for all $u_{0}\in B_{R}=\left\{u_{0}\in H_{x}^{s}(\R^d),
+    \norm{u_{0}}_{H_{x}^{s}(\R^d)}<R\right\}$ there exists a unique solution
+  $u\in C_{t}^{0}H_{x}^{s}\left( \left[ -T,T \right]\times \R^d  \right)$ to
+  \cref{eq:nonlinear-schrodinger-equation}. Furthermore, the map
+  \begin{equation*}
+    B_{R}\to C_{t}^{0}H_{x}^{s} \quad \text{given by}\quad u_{0}\mapsto u
+  \end{equation*}
+  is Lipshitz continuous.
+\end{theorem}
+\begin{proof}
+  Fix $R>0$. We will decide what $T>0$ is later. Now we will apply the
+  contraction mapping argument and will ultimately obtain unconditional
+  well-posedness. Let
+  \begin{equation*}
+    \mathcal{S} = \mathcal{N} = C_{t}^{0}H_{x}^{s}
+  \end{equation*}
+  and consider the map $D:\mathcal{N} \to \mathcal{S}$ given by
+  \begin{equation*}
+    DF(t,x) = i\mu \int_{0}^{t}e^{i(t-s)\Delta/2}F(s,x)ds 
+  \end{equation*}
+  and let $N:\mathcal{S} \to \mathcal{N}$ be given by
+  \begin{equation*}
+    N(u(t,x)) = |u|^{p-1}u.
+  \end{equation*}
+  We will need to show that there exists a constant
+  $C_{0}$ such that
+  \begin{equation}\label{eq:14}
+    \norm{DF}_{\mathcal{S}} \leq C_{0} \norm{F}_{\mathcal{N}}
+  \end{equation}
+  and 
+  \begin{equation}\label{eq:15}
+    \norm{Nu-Nv}_{\mathcal{N}} \leq  \frac{1}{2C_{0}}\norm{u-v}_{\mathcal{S}}
+  \end{equation}
+  (We are hiding the fact that we need $u_{\rm lin}\in B_{R/2}$. This won't
+  screw anything up). First we will prove \cref{eq:14}:
+  \begin{align*}
+    \norm{DF}_{\mathcal{S}}
+    &= \norm{\int_{0}^{t}e^{i(t-s)\Delta/2}F(s)ds }_{C_{t}^{0}H_{x}^{s}\left( [-T,T]\times \R^d \right)} \\
+    &\leq C_{0}(t,d)\norm{F}_{H_{x}^{s}}.
+  \end{align*}
+  Next, to prove \cref{eq:15},
+  \begin{align*}
+    \norm{N(u)-N(v)}_{C_{t}^{0}H_{x}^{s}}
+    &= \norm{|u|^{p-1}u-|v|^{p-1}v}_{C_{t}^{0}H_{x}^{s}}\\
+    &\leq \norm{\left( |u|^{p-1}+|v|^{p-1} \right)\left(u-v\right)}_{C_{t}^{0}H_{x}^{s}}\\
+    &\leq \tilde{C}_{0}(p,s,d,R)\norm{u-v}_{C_{t}^{0}H_{x}^{s}}.
+  \end{align*}
+  Now I want to apply the contraction mapping which means we have to have $T$
+  sufficiently small (so that $\tilde{C}_{0}<\frac{1}{2C_{0}}$). Then
+  contraction mapping implies that if if $u_{\rm lin }\in C_{t}^{0}H_{x}^{s}$,
+  $\norm{u_{\rm lin}}_{C_{t}^{s}H_{x}^{s}}\lesssim R$, there exists a unique
+  solution $u\in C_{t}^{\infty}H_{x}^{s}$ with
+  $\norm{u}_{C_{t}^{0}H_{x}^{s}}<R$. And it also implies that the map
+  $H_{x}^{s}\to C_{t}^{0}H_{x}^{s}$ given by $u \to u_{0}$ is Lipschitz on the
+  ball in on radius of order $O(R)$. [This is proposition 1.38 in Terry Tao's
+  notes]. This looks like \textbf{conditional} well-posedness. Next we explain
+  why we also get unconditional well-posedness using a bootstrap argument. 
+
+  We get uniqueness as long as $C_{t}^{0}H_{x}^{s}$ of the solution is $O(R)$.
+  But $\norm{u_0}_{H_{x}^{s}}$ at most $R$ at time $t=0$. We prove unconditional
+  uniqueness as follows. Let $u\in C_{t}^{0}H^{s}_{x}$ be what constructed
+  earlier. So $\norm{u}_{\mathcal{S}}\leq C_{1}R$. Let $u^{*}\in
+  C_{t}^{0}H^{s}_{x}$ is another solution. We'll show that $u^{*}$ is also in
+  the ball. Let $H(t)$ be the proposition
+  \begin{equation*}
+    H(t):
+    \norm{u^{*}}_{C_{t}^{0}H_{x}^{s}\left( [-t,t]\times R^{d} \right) } 
+    \leq 2C_{1}R.
+  \end{equation*}
+  This is our bootstrap assumption. We will show that this implies that $u^{*}$
+  actually lives in a smaller ball:
+  \begin{equation*}
+    C(t):
+    \norm{u^{*}}_{C_{t}^{0}H_{x}^{s}\left( [-t,t]\times R^{d} \right) } 
+    \leq C_{1}R,
+  \end{equation*}
+  which means we are in a smaller ball! It's like we want to be in the bathroom,
+  and we are assuming that we are in the house (a decent assumption) and then
+  finding out that we are actually in bathroom. The above bootstrap argument
+  works for every $t$ up to some fixed maximal value, which is $T$. This implies
+  unconditional LWP.   
+\end{proof}
+For the next theorem, we will need to introduce some new notation. If $s=0$ then $H^{s}=L^{2}$. 
+\begin{equation*}
+  s_{c}<0
+\end{equation*}
+and since $s_{c}=\frac{d}{2}-\frac{2}{p-1}$. Therefore
+\begin{equation*}
+  1<p <1+\frac{4}{d}
+\end{equation*}
+For the case with $s \leq d/2$ then sour solutions are in $H_{x}^{s}$ but this
+does not give classical solutions because there is no algebra property for
+$H^{s}$ when $s \leq d/2$.
+
+\begin{theorem}[Subcritical $L^2$ Solutions to NLS]
+  \label{thm:subcritical-L2-solutions-nls}  
+\end{theorem}
   
 \end{document}
 
