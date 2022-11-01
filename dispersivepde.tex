@@ -1478,9 +1478,10 @@ compact so the notion of a supremum needs to be adjusted.
     \leq \frac{1}{2C_{0}} \norm{u-v}_{\mathcal{S}^{0}}.
   \end{equation*}
   Here $N(u) = |u|^{p-1}u$, so we want to show
-  \begin{equation*}
-    \norm{|u|^{p-1}u-|v|^{p-1}v}_{\mathcal{N}^{0}} \leq \frac{1}{2C_{0}} \norm{u-v}_{\mathcal{S}^{0}}
-  \end{equation*}
+  \begin{equation}\label{eq:16-right-arrow}
+    \norm{|u|^{p-1}u-|v|^{p-1}v}_{\mathcal{N}^{0}} 
+    \leq \frac{1}{2C_{0}} \norm{u-v}_{\mathcal{S}^{0}}
+  \end{equation}
   whenever we have $\norm{u}_{\mathcal{S}^{0}}\leq C,R$.
 
   Taking $(q,r)$ to be an admissible exponent pair, we have
@@ -1495,13 +1496,68 @@ compact so the notion of a supremum needs to be adjusted.
   admissible.
 
   Now, we can estimate the $\mathcal{N}^{0}$ norm by $L_{t}^{q'}L_{x}^{r'}$.
-  Since $q>r$,  it follows that $\frac{p}{q}<\frac{1}{q'}$,  we can replace
+  Since $q>r$, it follows that $\frac{p}{q}<\frac{1}{q'}$, we can replace
   $L_{t}^{q'}$ by $L^{\frac{q}{p}}_{t}$ \pnote{(since
     $L^{\frac{q}{p}}_{t}\subset L^{q'}_{t}$)?}. This is the key point because by
   suing Holder inequality in time [i.e. since
-  $\frac{1}{p}=\frac{1}{q}+\frac{1}{r}$, $r>0$, we have $\norm{f}_{L^{p}[-T,T]}\lesssim
-  T^{1/r} \norm{f}_{L^{q}}$] and get a factor of $T^{\alpha}$ for some $\alpha>0$. 
+  $\frac{1}{p}=\frac{1}{q}+\frac{1}{r}$, $r>0$, we have
+  $\norm{f}_{L^{p}[-T,T]}\lesssim T^{1/r} \norm{f}_{L^{q}}$] and get a factor of
+  $T^{\alpha}$ for some $\alpha>0$.
+
+  In addition, we have the following inequality
+  \begin{equation*}
+    \left| |u|^{p-1}u-|v|^{p-1}v \right| 
+    \lesssim _{p} \norm{|u|^{p-1}+ |v|^{p-1}} \left| u-v \right|
+  \end{equation*}
+  So
+  \begin{align*}
+    \norm{|u|^{p-1}u-|v|^{p-1}v}_{\mathcal{N}^{0}} 
+    &= \norm{|u|^{p-1}u - |v|^{p-1}v}_{L^{q'}_{t}L^{\frac{r}{p}}} \\
+    &\leq _{p} T^{\alpha} \norm{|u|^{p-1}u-|v|^{p-1}v}_{L_{t}^{\frac{q}{p}}L^{\frac{r}{p}}} \\
+    &\leq _{p} T^{\alpha} \norm{u-v}_{L_{t}^{q}L_{x}^{r}}\left( \norm{u}_{L^{q}L^{r}}+\norm{v}_{L^{q}L^{r}} \right)^{p-1} \\
+    &\lesssim _{p}C_{1}R T^{\alpha}\norm{u-v}_{L_{t}^{q}L_{t}^{r}\left( \left[ -T,T \right]\times \R^d  \right) } \\
+    &\lesssim T^{\alpha} \norm{u-v}_{\mathcal{S}^{0}\left( [-T,T]\times \R^d  \right) }
+  \end{align*}
+  So in order to obtain the Lipshitz bound for $\mathcal{N}$ given by
+  \cref{eq:16-right-arrow}, we need to choose $T$ small enough (depending on
+  $p,C_{1},R$) such that the inequality holds, which means we have a solution to
+  \cref{eq:NLS-2022-10-28} with norm at most $C_{1}R/2$ which is unique!
+
+  Now we can drop the requirement that the norm of hte solutions be at most
+  $C_{1}R$ from the uniqueness result together with a bootstrap argument
+  $(C_{t}^{0}!!)$ \pnote{what does this parenthetical note mean?}. 
 \end{proof}
+\begin{remark}[Case $p=1+\frac{4}{d}$]
+  If $p=1+\frac{4}{d}$ you still get well-posedness but in the critical (
+  $L^{2}$ critical solutions). However, it becomes obvious that $T$ will depend
+  on more than the norm of hte initial data, but alos on the profile of your
+  solutions!! 
+\end{remark}
+\begin{theorem}[Critical $L_x^2$ NLS solution]
+  \label{thm:critical-Lx2-NLS-solution}
+  Let $p=1+\frac{4}{d}$, critical $L_{x}^{2}$ exponent and $\mu=\pm 1$. Then
+  \cref{eq:NLS-2022-10-28} is LWP in $L_{x}^{2}(\R^d)$ in the critical sense.
+  More specifically, given any $R>0$,  there exists a positive constant
+  $\epsilon_{0}(R,d)>0$ such that $u_{*}\in L^{2}_{x}(\R^d)$ such that
+  $\norm{u^{*}} \leq R$, $I=[-T,T]$  such that
+  \begin{equation*}
+    \norm{e^{ti\Delta/2}u_{*}}_{L_{t,x}^{2}} 
+    \leq \epsilon_{0}
+  \end{equation*}
+  Then for any
+  $u_{0}\in B:= \left\{ u_{0}\in L_{x}^{2}: \norm{u_{0}-u^{*}}_{L_{x}^{2}}\leq
+    \epsilon_{0}\right\} $ there exists a unique $L^{2}$ solution
+  $u\in \mathcal{S}^{0}$ of \cref{eq:NLS-2022-10-28}. And the solution map
+  $B\to \mathcal{S}^{0}$ given by $u_{0}\mapsto u$ is Lipshitz.
+\end{theorem} \pnote{Little confused about which statements are hypotheses and
+  which are conclusions in the above theorem. -m}
+\begin{remark}
+  Whether we were to take $\mu=\pm 1$ made no difference in the LWP theory
+  above.
+\end{remark}
+
+
+
 
 \end{document}
 
