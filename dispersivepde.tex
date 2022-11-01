@@ -1358,6 +1358,150 @@ $H^{s}$ when $s \leq d/2$.
 \begin{theorem}[Subcritical $L^2$ Solutions to NLS]
   \label{thm:subcritical-L2-solutions-nls}  
 \end{theorem}
-  
+\section{Lecture Notes:  2022-10-28}
+Last time we proved LWP theory for classical $L^{2}$-subcritical oslution for
+``our'' algebraic NLS.
+\begin{equation}\label{eq:NLS-2022-10-28}
+  \left\{
+    \begin{array}{l@{\quad\quad}l} iu_{t}+\frac{1}{2}\Delta = \mu|u|^{p-1}u &
+      p=\text{odd integer}\\
+      u_{0}(x)= u(t_{0},x)& u:I\times \R^d \to \mathbb{C}
+    \end{array}
+  \right.
+\end{equation}
+and without loss of generality, one can assume that $t_{0}=0$.
+
+Now, we want to show that we have less regular solutions, i.e. solutions in
+$H_{x}^{s}$ for $s \leq \frac{d}{2}$. In this case, one does not have the
+solutions in $L_{x}^{\infty}(\R^d)$ (recall $H^{s}\not\subset L^{\infty}$).
+
+Now maybe we can no longer sray that for all time the solution is in
+$L_{x}^{\infty}$, but maybe there is a time-averaged $L^{\infty}$ space such as
+$L_{t}^{p-1}L_{x}^{\infty}(\R^d)$ such that the solutions with regularity less
+than $\frac{d}{2}$ are contained by these spaces.
+
+Heuristics suggest that hte existence of such time-averaged spaces is possible
+because one does not expect ``energy'' of your solutions to be large on a large
+time (because it is a dispersive PDE and one has Strichartz (linear)).
+
+To this end we dfine $\mathcal{S}^{S}$ (Strichartz spaces) that capture all the
+Strichartz norms at a certain regularity $H_{x}^{s}$ simultaneously.
+
+Start with $L^{2}$ theory $(s=0,H^{0}=L^{2})$ which gives the Strichartz space
+$\mathcal{S}^{0}=\mathcal{S}^{0}(I\times \R^d)$, $I\subset \R$, with norm defined as
+\begin{equation*}
+  \norm{u}_{\mathcal{S}^{0}(I\times \R^d)} := \sup_{(q,r) \text{ admissible}} \norm{u}_{L_{t}^{q}L_{x}^{r}}(I\times \R^d).
+\end{equation*}
+\pnote{What is the definition of admissibility here? Is it $2/q+d/r = d/2$? -m}
+For $d=2$ we must be careful because the sets of admissible exponents is not
+compact so the notion of a supremum needs to be adjusted.
+
+\begin{remark}[Strichartz Space Norms]
+  \label{rmk:strichartz-space-norms}
+  We make the following observations:
+  \begin{enumerate}
+    \item The $\mathcal{S}^{0}(I\times \R^n)$ norm controls the
+    $C_{t}^{0}L_{x}^{2}$ norm.
+    \item $\mathcal{S}^{0}$ is a Banach space. Therefore we have a dual space,
+    \begin{equation}\label{eq:13}
+      \mathcal{N}^{0}(I\times \R^d):=[\mathcal{S}^{0}(I\times \R^d)]^{*}
+    \end{equation}
+    which is equipped with the norm
+    \begin{equation*}
+      \norm{F}_{\mathcal{N}^{0}(I\times \R^d)} 
+      := \inf_{(q',r') \text{ admissible}} \norm{u}_{L_{t}^{q'}L^{r'}_{x}(I\times \R^d)}
+    \end{equation*}
+    \pnote{Should this be $Fu$ in the norm on the right-hand side?  -m}
+    or equivalently,
+    \begin{equation*}
+      \norm{F}_{\mathcal{N}^{0}} \leq \norm{F}_{L_{t}^{q'}L_{x}^{r'}(I\times \R^d)}
+    \end{equation*}
+    provided that the right hand side is finite.
+    \item $(\mathcal{S}^{1})^{*}\neq \mathcal{N}^{1}$
+    \item Letting $F=i u_{t}+\frac{\Delta}{2}u$, we can compactly write the
+    Strichartz estimates [(i),(ii)] \pnote{Not sure where this is referencing
+      -m} in the following way
+    \begin{equation}\label{eq:compactly-written-strichartz}
+      \norm{u}_{\mathcal{S}^{0}(I\times \R^d)} 
+      \lesssim d \norm{u(t_{0})}_{L_{x}^{2}(\R^d)}+\norm{F}_{\mathcal{N}^{0}(I\times \R^d)}
+    \end{equation}
+  \end{enumerate}
+\end{remark}
+
+\begin{theorem}[Subcritical LWP in Strichartz Space]
+  \label{thm:subcritical-LWP-in-strichartz-space}
+  Let $p$ be any $L^{2}$-subcritical exponent (i.e., $1<p<1+\frac{4}{d}$), and
+  let $\mu=\pm 1$. Then \cref{eq:NLS-2022-10-28} is locally well-posed in
+  $L_{x}^{2}(\R^d)$ in the subcritical sense. More specifically, for any $R>0$,
+  there exists a constant $T=T(k,d,p,R)>0$ such that for all $u_{0}$ in
+  $B_{R}:=\left\{u_{9}\in L_{x}^{2}(\R^d):
+    \norm{u_{0}}_{L_{x}^{2}(\R^d)}<R\right\}$, it follows that there exists a
+  unique solution $u$ to \cref{eq:NLS-2022-10-28} such that
+  \begin{equation*}
+    u\in \mathcal{S}^{0}\left( [-T,T]\times \R^d \right)
+    \subset C_{t}^{0}L_{x}^{2}\left( [-T,T]\times \R^d \right),
+  \end{equation*}
+  and, furthermore, the map $B_{R}\to \mathcal{S}^{0}$ given by $u_{0}\mapsto u$
+  is Lipshitz continuous.
+\end{theorem}
+\begin{proof}[Proof of \cref{thm:subcritical-LWP-in-strichartz-space}].
+  The proof relies on the same \textbf{contraction mapping} argument that you find in Tao
+  (prop 1.38), and have the same integral represntation (i.e. see
+  \cref{eq:duhamel-general} of NLS via Duhamel's
+  formula which leads to
+  \begin{enumerate}
+    \item $D:\mathcal{N} \to \mathcal{S}$ given by
+    $DF(t):=-i \int_{0}^{t}e^{i(t-s)\frac{\Delta}{2}}F(s)ds $
+    \item $N(u(t))=\mu |u|^{p-1}u$. 
+  \end{enumerate}
+  Here we use different choicese of $\mathcal{S}$ and $\mathcal{N}$ than in the
+  classical solutions to the NLS proof. There if you recall we used
+  $\mathcal{S}=\mathcal{N}=C_{t}^{0}H_{x}^{s}$.
+  Here we take
+  \begin{equation*}
+    \mathcal{S} = \mathcal{S}^{0}(I\times \R^d)
+    \quad \text{and} \quad
+    \mathcal{N} = \mathcal{N}^{0}(I\times \R^d).
+  \end{equation*}
+  In order to place $u_{\rm lin}\in B_{\frac{\epsilon}{2}}$, we get from
+  \cref{eq:compactly-written-strichartz} that we need to take $\epsilon=C_{1}R$,
+  where $C_{1}=C_{1}(d)$ is some large constant depending on $d$.
+
+  Now we need to return to proving the bound
+  \begin{equation*}
+    \norm{DF}_{\mathcal{S}^{0}} \leq C_{0} \norm{F}_{\mathcal{N}^{0}}.
+  \end{equation*}
+  This bound follow from \cref{eq:compactly-written-strichartz} (for some large
+  $C_{0}$). Now we return to the estimate for $N$:
+  \begin{equation*}
+    \norm{N(u)-N(v)}_{\mathcal{N}^{p}} 
+    \leq \frac{1}{2C_{0}} \norm{u-v}_{\mathcal{S}^{0}}.
+  \end{equation*}
+  Here $N(u) = |u|^{p-1}u$, so we want to show
+  \begin{equation*}
+    \norm{|u|^{p-1}u-|v|^{p-1}v}_{\mathcal{N}^{0}} \leq \frac{1}{2C_{0}} \norm{u-v}_{\mathcal{S}^{0}}
+  \end{equation*}
+  whenever we have $\norm{u}_{\mathcal{S}^{0}}\leq C,R$.
+
+  Taking $(q,r)$ to be an admissible exponent pair, we have
+  \begin{equation*}
+    \frac{2}{q}+\frac{d}{r} = \frac{d}{2}
+    \quad \text{and} \quad
+    \frac{p}{r} = \frac{1}{r'}
+  \end{equation*}
+  The second equality refers to the nonlinearity in which we multiply $p$
+  functions in $L^{r}$ and you land in $L^{r'}$. The hypotheses of the theorem
+  are satisfied $(1 < p<1+\frac{4}{d})$, then $2<r<q<\infty$ and $(q,r)$ are
+  admissible.
+
+  Now, we can estimate the $\mathcal{N}^{0}$ norm by $L_{t}^{q'}L_{x}^{r'}$.
+  Since $q>r$,  it follows that $\frac{p}{q}<\frac{1}{q'}$,  we can replace
+  $L_{t}^{q'}$ by $L^{\frac{q}{p}}_{t}$ \pnote{(since
+    $L^{\frac{q}{p}}_{t}\subset L^{q'}_{t}$)?}. This is the key point because by
+  suing Holder inequality in time [i.e. since
+  $\frac{1}{p}=\frac{1}{q}+\frac{1}{r}$, $r>0$, we have $\norm{f}_{L^{p}[-T,T]}\lesssim
+  T^{1/r} \norm{f}_{L^{q}}$] and get a factor of $T^{\alpha}$ for some $\alpha>0$. 
+\end{proof}
+
 \end{document}
 
