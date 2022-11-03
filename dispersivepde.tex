@@ -1359,7 +1359,7 @@ $H^{s}$ when $s \leq d/2$.
   \label{thm:subcritical-L2-solutions-nls}  
 \end{theorem}
 \section{Lecture Notes:  2022-10-28}
-Last time we proved LWP theory for classical $L^{2}$-subcritical oslution for
+Last time we proved LWP theory for classical $L^{2}$-subcritical solution for
 ``our'' algebraic NLS.
 \begin{equation}\label{eq:NLS-2022-10-28}
   \left\{
@@ -1555,9 +1555,180 @@ compact so the notion of a supremum needs to be adjusted.
   Whether we were to take $\mu=\pm 1$ made no difference in the LWP theory
   above.
 \end{remark}
+\section{Lecture Notes: 2022-11-01}
+I missed class. Talked about the LWP theory for the critical case.
+\section{Lecture Notes: 2022-11-03}
+
+\subsection{Conserved Functionals (Mass, Energy, etc) and some BIG Problems}
+We have done LWP for the following cases:
+\begin{itemize}
+  \item $L^{2}$ subcritical NLS
+  \item $L^{2}$ critical NLS 
+\end{itemize}
+What about global well-posedness (GWP)?
+\begin{itemize}
+  \item Small data (i.d.) $\to $ careful when $\mu=\pm 1$
+  \item Large data (not an easy problem, especially at the critical level)
+\end{itemize}
+NLS has many conserved functionals. These include \textbf{mass}, defined as
+\begin{equation*}
+  M(u(t,x)) := \int \left| u(t,x) \right|^{2}dx
+\end{equation*}
+and \textbf{energy}, defined as
+\begin{equation*}
+  E(u(t,x)) := \int \left| \nabla u \right|^{2} + \frac{2}{p+1}u|u|^{p+1}dx
+\end{equation*}
+as well as \textbf{momentum}, defined as
+\begin{equation*}
+  P(u(t,x)) := \mathrm{Im} \int u \nabla \bar{u} dx 
+\end{equation*}
+Energy and mass are more frequently-used; this is because the momentum does not
+have a sign (by contrast, the mass is always positive and the energy is either
+positive or negative). Furthermore, inspecting the equations above, we see that
+the mass equation suggests $L^2$ and the energy equation suggests $H^{1}$.
+
+There are two BIG problems
+\begin{enumerate}
+  \item GWP for NLS for $L^2$-critical NLS. This also goes by the name
+  ``mass-critical NLS''. This was proven by Dodson in 2011.
+  \item GWP for NLS for $H^{1}$-citical NLS (large data)q. This goes by the name
+  ``energy-critical NLS.'' This work was initially done by the I-Team (??) and
+  then redone by Visan using tools from Dodson.
+\end{enumerate}
+Both of these problems were done for the defocusing case. We will discuss some
+of the tools used for solving the energy-critical NLS.
+
+We will now discuss GWP for subcritical NLS problems for large data, defocusing
+case. (If you are in the small data case, you can still used a fixed-point
+argument to prove GWP).
+
+\subsection{Easy Background}
+First, we will state two versions of Gronwall's inequality without proof.
+\begin{theorem}[Gronwall's Inequality (Integral Version)]
+  \label{thm:gronwalls-inequality-integral-version}
+  Let $u(t): [t_{0},t_{1}] \to \R$ be a continuous and nonnegative function, and
+  suppose that there exists a nonnegative function $B:[t_{0},t_{1}]\to \R$ such that for any $t\in [t_{0},t_{1}]$, the following inequality holds
+  \begin{equation*}
+    u(t) \leq A +\int_{t_{0}}^{t}B(s)u(s)ds.
+  \end{equation*}
+  Then
+  \begin{equation}
+    u(t) \leq  A e^{\int_{t_{0}}^{t}B(s)ds }
+  \end{equation}
+  for all $t\in [t_{0},t_{1}]$. 
+\end{theorem}
+\begin{theorem}[Gronwall's Inequality (Differntial Version)]
+  \label{thm:gronwalls-inequality-differntial-version}
+  Let $u(t): [t_{0},t_{1}] \to \R$ be a continuous and nonnegative function, and
+  suppose that there exists a nonnegative function $B:[t_{0},t_{1}]\to \R$ such that for any $t\in [t_{0},t_{1}]$, the following inequality holds
+  \begin{equation*}
+    \partial_{t}u(t) \leq B(t)u(t).
+  \end{equation*}
+  Then one has
+  \begin{equation*}
+    u(t) \leq  u(t_{0})e^{\int_{t_{0}}^{t}B(s)ds }.
+  \end{equation*}
+\end{theorem}
+Third, we have pesistence of regularity.
+\begin{theorem}[Persistance of Regularity]
+  \label{thm:persistance-regularity}
+  Suppose $0=t_{0}\in I$, let $s \geq 0$,  and let $u\in
+  C_{t}^{0}H_{x}^{s}\left(I\times \R^d\right)$ be an $H^{s}_{x}$ solution to
+  NLS. If the following quantity is finite:
+  \begin{equation*}
+    \norm{u}_{L_{t}^{p-1}L_{x}^{\infty}\left( I\times \R^d \right) }
+  \end{equation*}
+  then $u$ is uniformly bounded in $H^{s}_{x}$. In particular, the follwing
+  inequality holds:
+  \begin{equation*}
+    \norm{u}_{L_{t}^{\infty}H^{s}_{x}\left( I\times \R^d \right) }
+    \leq \norm{u(0)}_{H^{s}_{x}}\exp\left\{c(p,s,d)\norm{u}_{L_{t}^{p-1}L_{x}^{\infty}}^{p-1} \right\}.
+  \end{equation*}
+\end{theorem}
+\begin{proof}[Proof of \cref{thm:persistance-regularity}]
+  I can reduce the problem to the case where $I=[0,T]$ where $T>0$. (Symmetry
+  gives $[-T,0]$). By Duhamel's Principle (see \cref{eq:duhamel-general}), we
+  have
+  \begin{equation*}
+    u(t) 
+    = e^{it\nabla \mu_{0}}- i\mu \int_{0}^{t}e^{i(t-s)\Delta}\left| u \right|^{p-1}uds.
+  \end{equation*}
+  Now we use the property that the linear Schrodinger propagation is a unitary
+  operator on $H^{s}_{x}$. This implies that
+  \begin{equation*}
+    \norm{u(t)}_{H^{s}_{x}(\R^d)l} 
+    \leq
+    \norm{u_{0}}_{H_{x}^{s}(\R^d)}
+    + \int_{0}^{t} \norm{|u|^{p-1}u}_{H_{x}^{s}(\R^d)}ds. 
+  \end{equation*}
+  Now we make an assumption. Specifically, we will assume that our solution
+  $u$ is \textit{bounded}---namely, that
+  \begin{equation*}
+    u\in  L_{x}^{\infty}\cap H^{s}_{x}.
+  \end{equation*}
+  This assumption allows for the following Moser-type inequality:
+  \begin{lemma}[Moser-Type Inequality]
+    \label{lem:moser-type-inequality}
+    If $f,g\in H^{s}_{x}\cap L_{x}^{\infty}$,  then
+    \begin{equation*}
+      \norm{fg}_{H^{s}_{x}} 
+      \leq \norm{f}_{H^{s}_{x}}\norm{g}_{L^{\infty}_{x}}
+      + \norm{g}_{H^{s}_{x}}\norm{f}_{L^{\infty}_{x}}
+    \end{equation*}
+  \end{lemma}
+  We will then be able to use \cref{thm:gronwalls-inequality-integral-version}
+  (Gronwall Integral Inequality), using
+  \begin{equation*}
+    \norm{|u|^{p-1}u}_{H^{s}_{x}(\R)}< \norm{u}_{H^{s}_{x}}\norm{u}_{L_{x}^{\infty}}^{p-1}
+  \end{equation*}
+\end{proof}
+Fourth, we will use conservation of energies.
+\begin{theorem}[Conservation of Mass]
+  \label{thm:conservation-mass}
+  It holds that $\frac{d}{dt}M(t) = 0$, or equivalently,
+  \begin{equation*}
+    \norm{u(t)}_{L_{x}^{2}}^{2} = \norm{u(t_{0})}_{L_{x}^{2}}.
+  \end{equation*}
+\end{theorem}
+\begin{proof}[Proof of \cref{thm:conservation-mass}]
+  Direct computation, using equation
+  \begin{equation*}
+    i \partial_{t} u + \Delta u = |u|^{p-1}u.
+  \end{equation*}
+\end{proof}
+
+\subsection{GWP for on $L^2$-Supercritical NLS (large data)}
+\begin{theorem}
+  Suppose $d=1$, $p=3$, $\mu=\pm 1$ and $t_{0}\in \R$. Let
+  $u_{0}\in L_{x}^{2}(\R^d)$ and let $I$ be an interval such that $t_{0}\in I$.
+  Then there exists a unique solution
+  $u\in S^{0}(I\times \R^d)\subset C_{t}^{\infty}L_{x}^{2}$ to NLS, from the LWP
+  theory. Moreover,
+  you have the Lipshitz dependence on the initial data. We claim that this hold
+  globally in time.
+\end{theorem}
+\begin{proof}
+  Involves using LWP result many times for a sequence of points in time, using
+  the conservation of mass. See exercise in Tao's book about gluing strong
+  solutions together.
+\end{proof}
+This proof does not work in the critical case; in the critical case, the
+intervals you add up keep getting smaller so there is no guarantee that you can
+get existence for all time.
 
 
+\begin{remark}
+  For the $L^2$-critical case, you cannot get GWP in the same way. In the
+  focusing case, $(\mu=+1)$ you have some localized solutions called solitons.
+  These might be Schwarz, but will blowup in finite time. Will give an example
+  next time. In the defocusing case $(\mu=-1)$, you do not get the whole time
+  interval. 
+\end{remark}
+\begin{remark}
+  $H^{1}$ subcritical GWP you can play the same game with the two conserved
+  quantities energy and mass.
+\end{remark}
 
-
+We have a make-up class at 7pm on Friday on zoom. It will be cool. 
 \end{document}
 
