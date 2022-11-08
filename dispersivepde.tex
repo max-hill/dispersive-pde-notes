@@ -1730,6 +1730,144 @@ get existence for all time.
   quantities energy and mass.
 \end{remark}
 
-We have a make-up class at 7pm on Friday on zoom. It will be cool. 
+\section{Lecture Notes: 2022-11-08}
+Today we will dig into the proofs of Visan and the methods. I will give you
+explanation why and how we do that. We will finish this topic by Thanksgiving.
+Then we will discuss mass-critical well-posedness.
+
+Last time, we discussed global well-posedness for $L^2$ subcritical NLS. Similar
+methods will be used for GWP for $H^{1}$-subcritical NLS.
+
+We are going to cover the following tools:
+\subsection{Profile Decomposition}
+Using the Sobolev embedding,
+\begin{equation}\label{eq:16}
+  \norm{e^{it\delta}f}_{L_{t,x}^{\frac{2(d+2)}{d-2}}}
+  \leq
+  \norm{e^{it\delta}\nabla f}_{L_{t}^{\frac{2(d+2)}{d-2}}L_{x}^{\frac{2d(d+2)}{d^{2}+4}}}
+  \leq
+  \norm{f}_{\mathring{H}^{1}}
+\end{equation}
+Strichartz estimates do not have compactness properties. That is to say, given
+a sequence $\left\{f_{n}\right\}_{n \geq 1}\subset H^{1}(\R^d)$, I want to say something
+about the convergence of $\left\{e^{it\Delta}\right\}_{n \geq 1}$  in
+$L_{t,x}^{\frac{2(d+2)}{d-2}}$. But converence will not happen---not even at
+the level of a subsequence. So we can't even get our hands on a convergent
+subsequence. The issues arise from the noncompact symmetries of \cref{eq:16},
+which include time translation, space translations, $H^{1}$-scaling. In the
+next example, we describe an easy scenario which illustrates this issue.
+\begin{example}[Time Translation Symmetry]
+  \label{ex:time-translation}
+  Let $f\in H^{1}$ and for each positive integer $n$, define
+  \begin{equation*}k
+    f_{n}(x) := f(x+x_{n})
+  \end{equation*}
+  where $\left\{x_{n}\right\}_{n \geq 1}\subset \R^d$ is a divergent sequence.
+  Now what can we say about
+  \begin{equation*}
+    \left\{e^{it\Delta}f_{n}\right\}_{n \geq 1}?
+  \end{equation*}
+  These converge weakly to zero. But energy is conserved so this cannot
+  converge strongly to zero, not even along a subsequence.
+\end{example}
+
+The fix to this is to understand the \textbf{concentration of your solution},
+which will somehow allow us to pass a limit by taking out the bad portions of
+our initial data (?). For this we have two technical lemmas which will show (1)
+that linear solutions to the NLS with nontrivial $L^{q}_{t}L_{x}^{p}$ norms
+concentrate on at least one frequency annulus, and (2) that solutions will
+contain a bubble of concentration about every point in space and time. You will
+see what I mean by ``bubble of concentration'' in a moment.
+
+
+\begin{lemma}[Concentration on 1 Annulus]
+  \label{lem:concentration-1-annulus}
+  Assume $d \geq 3$ and $f\in \mathring{H}(\R^d)$. Then
+  \begin{equation*}
+    \norm{e^{it\Delta}f}_{L_{t,x}^{\frac{2(d+2)}{d-2}}} 
+    \leq \norm{f}_{\mathring{H}_{x}}^{\frac{d-2}{d+2}} \cdot
+    \sup_{N\in 2^{\Z}} \norm{e^{it\Delta}f_{N}}_{L_{t,x}^{\frac{2(d+2)}{d-2}}}^{\frac{4}{d+2}}
+  \end{equation*}
+  where $2^{\Z}:= \left\{2^{i}:i\in \Z\right\}$. 
+\end{lemma}
+\begin{proof}[Proof of \cref{lem:concentration-1-annulus}]
+  The case where $d<6$ is easier, so we will do the case with $d \geq 6$.
+  \begin{align*}
+    \norm{e^{it\Delta}f}_{L_{t,x}}^{\frac{2(d+2)}{d-2}}
+    &\lesssim 
+      \int_{\R}\int_{\R^{d}} \left( \sum_{N\in 2^{\Z}}\left| e^{it\Delta}f_{N} \right|^{2} \right)^{\frac{d+2}{d-2}}dxdt\\
+    &\lesssim
+      \sum_{M \leq N}  \int_{\R}\int_{\R^{d}} \left| e^{it\Delta}f_{M} \right|^{\frac{d+2}{d-2}}\cdot\left| e^{it\Delta}f_{N} \right|^{\frac{d+2}{d-2}}dxdt\\
+    &\lesssim
+      \sum_{M \leq N}
+      \norm{e^{it\Delta}f_{M}}_{L_{t,x}^{\frac{2(d+2)}{d-4}}}
+      \norm{e^{it\Delta}f_{M}}_{L_{t,x}^{\frac{2(d+2)}{d-2}}}^{\frac{4}{d-2}}
+      \norm{e^{it\Delta}f_{N}}_{L_{t,x}^{\frac{2(d+2)}{d-2}}}^{\frac{4}{d-2}}
+      \norm{e^{it\Delta}f_{N}}_{L_{t,x}^{\frac{2(d+2)}{d}}}
+      &&\text{by Holder's inequality}
+  \end{align*}
+  Call the terms in the product on the right-hand side as I, II, III, and IV
+  respectively.
+
+  For IV, we will use Stricharz estimate.
+  For I, we use Bernstein's inequality
+  \begin{align*}
+    \mathrm{I}
+    &= \norm{e^{it\Delta}f_{M}}_{L_{t,x}^{\frac{2(d+2)}{d-4}}}\\
+    &\leq M^{2} \norm{e^{it\Delta}f_{M}}_{L_{t}^{\frac{2(d+2)}{d-2}}L_{x}^{\frac{2d(d+2)}{d^{2}+8}}}
+  \end{align*}
+  For II and III, we take advantage of the fact that $M \leq N$ to give us that
+  \begin{align*}
+    \norm{e^{it\Delta}f}_{L_{t,x}}^{\frac{2(d+2)}{d-2}} 
+    &\lesssim \sup_{N \in 2^{\Z}}\norm{e^{it\Delta}f}_{L_{t,x}^{\frac{2(d+2)}{d-2}}}^{\frac{8}{d-2}}
+      \cdot \sum_{M \leq N} M^{2}\norm{f_{M}}_{L^{2}}\norm{f_{N}}_{L^{2}} \\
+    &\lesssim \sum_{M \leq N} \frac{M}{N} \norm{\Delta f_{M}}_{L^2_{x}}\norm{\Delta f_{N}}_{L^2_{x}} \\
+    &\leq \norm{f}_{\mathring{H}^{1}}^{2}
+  \end{align*}
+\end{proof}
+
+Think about how we would do the above proof for $d \leq 3$.
+
+\begin{lemma}[Bubble of Concentration]
+  \label{lem:bubble-concentration}
+  Let $d \geq 3$,  $\left\{f_{n}\right\}_{n\geq1}\subset H^{1}(\R^d).$ Suppose
+  that
+  \begin{equation*}
+    \lim_{n\to\infty} \norm{f_{n}}_{\mathring{H}_{x}^{1}} = A< \infty
+    \quad \text{and} \quad
+    \lim_{n\to\infty} \norm{e^{it\Delta}f_{n}}_{L_{t,x}^{\frac{2(d+2)}{d-2}}}=\epsilon>0.
+  \end{equation*}
+  Then there exists a subsequence in $n,\phi\in \mathring{H}^{1}_{x},
+  \left\{\lambda_{n}\right\}_{n \geq 1}\subset (0,\infty),
+  \left\{(t_{n},x_{n})\right\}\subset \R\times \R^{d}$ such that
+  \begin{equation*}
+    \lambda_{n}^{\frac{d-2}{d}}\left[ e^{it_{n}\lambda_{n}^{2}\Delta}f_{n}
+    \right](\lambda_{n}x_{n}+x_{n})\rightharpoonup \phi(x) \quad \text{weakly
+      in }\mathring{H}^{1}_{x}
+  \end{equation*}
+  and
+  \begin{equation*}
+    \liminf_{n\to\infty} \left\{\norm{f_{n}}_{\mathring{H}^{1}_{x}}^{2}-
+      \norm{f_{n}-\phi_{n}}_{\mathring{H}_{x}^{1}}^{2}\right\} =
+    \norm{\phi}_{\mathring{H}^{1}_{x}}^{2} \geq A^{2}\left( \frac{\epsilon}{A}
+    \right)^{\frac{d(d+2)}{4}} 
+  \end{equation*}
+  where
+  \begin{equation*}
+    \phi_{n} = \lambda_{n}^{\frac{d-2}{2}} \left[ e^{-i\lambda_{n}^{2}t_{n}\Delta}\phi \right]\left( \frac{x-x_{n}}{\lambda_{n}} \right),
+  \end{equation*}
+  and finally
+  \begin{equation*}
+    \lim_{n\to\infty}  \norm{e^{it\Delta}f_{n}}_{L_{t,x}^{\frac{2(d+2)}{d-2}}}^{\frac{2d}{d-2}} - \norm{e^{it\Delta}\left( f_{n}-\phi_{n} \right) }_{L_{t,x}^{\frac{2(d+2)}{d-2}}}^{\frac{2d}{d-2}} \geq \epsilon^{\frac{2(d+2)}{d-2}} \left( \frac{\epsilon}{A} \right)^{(d+2)(d+4)/4} 
+  \end{equation*}
+\end{lemma}
+
+we will prove this next class.
+
+
+
+
 \end{document}
 
+\bibliographystyle{siam.bst}
+\bibliography{bibliography}
