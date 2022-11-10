@@ -1828,6 +1828,8 @@ see what I mean by ``bubble of concentration'' in a moment.
 
 Think about how we would do the above proof for $d \leq 3$.
 
+Next, we state the ``bubble removal proposition'' (3.2 in Visan):
+
 \begin{lemma}[Bubble of Concentration]
   \label{lem:bubble-concentration}
   Let $d \geq 3$,  $\left\{f_{n}\right\}_{n\geq1}\subset H^{1}(\R^d).$ Suppose
@@ -1837,35 +1839,134 @@ Think about how we would do the above proof for $d \leq 3$.
     \quad \text{and} \quad
     \lim_{n\to\infty} \norm{e^{it\Delta}f_{n}}_{L_{t,x}^{\frac{2(d+2)}{d-2}}}=\epsilon>0.
   \end{equation*}
-  Then there exists a subsequence in $n,\phi\in \mathring{H}^{1}_{x},
-  \left\{\lambda_{n}\right\}_{n \geq 1}\subset (0,\infty),
-  \left\{(t_{n},x_{n})\right\}\subset \R\times \R^{d}$ such that
+  Then there exists a subsequence of indices $n\in \Z_{>0}$ and a function
+  $\phi\in \mathring{H}^{1}_{x}$ such that there exists a sequence of scales
+  $\left\{\lambda_{n}\right\}_{n \geq 1}\subset (0,\infty)$ and a sequence of
+  points in time $ \left\{(t_{n},x_{n}):n\in \Z_{>0}\right\}\subset \R\times \R^{d}$ such that
   \begin{equation*}
     \lambda_{n}^{\frac{d-2}{d}}\left[ e^{it_{n}\lambda_{n}^{2}\Delta}f_{n}
-    \right](\lambda_{n}x_{n}+x_{n})\rightharpoonup \phi(x) \quad \text{weakly
+    \right](\lambda_{n}x+x_{n})\rightharpoonup \phi(x) \quad \text{weakly
       in }\mathring{H}^{1}_{x}
   \end{equation*}
   and
   \begin{equation*}
-    \liminf_{n\to\infty} \left\{\norm{f_{n}}_{\mathring{H}^{1}_{x}}^{2}-
+    \lim_{n\to\infty} \left\{\norm{f_{n}}_{\mathring{H}^{1}_{x}}^{2}-
       \norm{f_{n}-\phi_{n}}_{\mathring{H}_{x}^{1}}^{2}\right\} =
     \norm{\phi}_{\mathring{H}^{1}_{x}}^{2} \geq A^{2}\left( \frac{\epsilon}{A}
     \right)^{\frac{d(d+2)}{4}} 
   \end{equation*}
   where
   \begin{equation*}
-    \phi_{n} = \lambda_{n}^{\frac{d-2}{2}} \left[ e^{-i\lambda_{n}^{2}t_{n}\Delta}\phi \right]\left( \frac{x-x_{n}}{\lambda_{n}} \right),
+    \phi_{n}(x) := \lambda_{n}^{-\frac{d-2}{2}} \left[ e^{-i\lambda_{n}^{-2}t_{n}\Delta}\phi \right]\left( \frac{x-x_{n}}{\lambda_{n}} \right),
   \end{equation*}
   and finally
   \begin{equation*}
-    \lim_{n\to\infty}  \norm{e^{it\Delta}f_{n}}_{L_{t,x}^{\frac{2(d+2)}{d-2}}}^{\frac{2d}{d-2}} - \norm{e^{it\Delta}\left( f_{n}-\phi_{n} \right) }_{L_{t,x}^{\frac{2(d+2)}{d-2}}}^{\frac{2d}{d-2}} \geq \epsilon^{\frac{2(d+2)}{d-2}} \left( \frac{\epsilon}{A} \right)^{(d+2)(d+4)/4} 
+    \lim_{n\to\infty}  \norm{e^{it\Delta}f_{n}}_{L_{t,x}^{\frac{2(d+2)}{d-2}}}^{\frac{2(d+2)}{d-2}} - \norm{e^{it\Delta}\left( f_{n}-\phi_{n} \right) }_{L_{t,x}^{\frac{2(d+2)}{d-2}}}^{\frac{2(d+2)}{d-2}} \gtrsim \epsilon^{\frac{2(d+2)}{d-2}} \left( \frac{\epsilon}{A} \right)^{(d+2)(d+4)/4} 
   \end{equation*}
 \end{lemma}
+The proof is not that bad and we will go over it. We will prove this next class.
+\section{Lecture Notes: 2022-11-10}
+We want to prove GWP for energy critical NLS. Energy means $H^{1}$. We have a
+sequence ${f_{n}}_{n}\subset H^{1}$, and we have
+$\left\{e^{it\Delta}f_{n}\right\}_{n}$ and we want some convergence of this
+latter sequence in $L_{t,x}^{\frac{d(d+2)}{d-2}}$, or at least convergence of
+some subsequence. But this doesn't work directly.
 
-we will prove this next class.
+Recall \cref{lem:concentration-1-annulus} (Prop 3.1 in Visan) which says that
+the Stricharz norm of $e^{it\Delta}f$ is controlled by a dyadic piece. This
+suggests that maybe we can subtract out the parts where the norms are
+concentrated. Recall also \cref{lem:bubble-concentration} (Prop 3.2 in Visan),
+which we stated but did not prove. This is the ``bubble removal proposition''. You should read the proof in Visan.
 
+The nonlinear problem will be similar to the linear problem but with some errors
+but these will be perturbative. This is the stability argument in Chapter 5 of
+Visan.
 
+[More discussion about the meaning of the statement of
+\cref{lem:bubble-concentration}].
 
+The next result is Theorem (4.1) in Visan.
+
+\begin{theorem}[$\mathring{H}_x^1$ linear profile decomposition for linear Shrodinger]
+  \label{thm:H1x-linear-profile-decomposition-for-linear-shrodinger}
+  Fix $d \geq 3$ and let $f_{n}$ be a sequence of bounded functions in
+  $\mathring{H}_{x}^{1}(\R^d)$. Passing to a subsequence, there exists $J^{*}\in
+  \left\{1,2,\ldots\right\}\cup \left\{\infty\right\}$, functions
+  $\left\{\phi^{j}: j=1,\ldots,J^{*}\right\}\subset \mathring{H}_{x}^{1}$,  a
+  sequence $\left\{\lambda_{n}^{j}\right\}\subset (0,\infty)$, and points
+  $\left\{(t_{n}^{j},x_{n}^{j}\right\}\subset \R\times\R^{n}$ such that for each
+  finite $J\in \left\{0,\ldots,J^{*}\right\}$, we have the following
+  decomposition:
+  \begin{equation}\label{eq:linear-shrodinger-profile-decomposition}
+    f_{n}= \sum_{j=1}^{J} \left( \lambda_{n}^{j} \right)^{-\frac{d-2}{2}}\left[ e^{it_{n}\Delta}\phi^{j} \right]\left( \frac{x-x_{n}^{j}}{x_{m}^{j}} \right) + w_{m}^{J}.
+  \end{equation}
+  This decomposition has the following properties:
+  \begin{enumerate}
+    \item The function $w_{m}^{J}$ is small in the space-time norm:
+    \begin{equation*}
+      \lim_{J\to J^{*}} \limsup_{n\to\infty} \norm{e^{it\Delta}w_{n}^{J}}_{L_{t,x}^{\frac{2(d+2)}{d-2}}}.
+      = 0
+    \end{equation*}
+    \item Subtracting out all the bubbles gives something which converges to
+    zero:
+    \begin{equation*}
+      \lim_{n\to\infty} \left[ \norm{\nabla f_{n}}_{L^{2}}^{2}- \sum_{j=1}^{J}\norm{\nabla \phi^{j}}_{L^{2}}^{2}- \norm{\nabla w_{n}^{J}}_{L^{2}}^{2}  \right]  = 0.
+    \end{equation*}
+    \item Subtracting all the energy that all the profiles measured in the
+    space-time (and measuring in the same space), then subtracting the
+    remainder, converges to zero. (This is like applying
+    \cref{lem:bubble-concentration} many times).
+    \begin{equation*}
+      \lim_{n\to\infty}
+      \left[ \norm{f_{n}}_{L_{t,x}^{\frac{2d}{d-2}}}^{\frac{2d}{d-2}}
+        -\sum_{j=1}^{J}
+        \norm{e^{it_{n}^{j}\Delta}\phi^{j}}_{L_{t,x}^{\frac{2d}{d-2}}}^{\frac{2d}{d-2}}
+      \right] 
+      = 0
+    \end{equation*}
+    \item
+    \begin{equation*}
+      e^{-it_{n}^{J}}\left[ \left( \lambda_{n}^{J}
+        \right)^{\frac{d-2}{2}}w_{n}^{J}(\lambda_{n}^{J}+x_{n}^{J})  \right]
+      \rightharpoonup  0 \text{ weakly in }\mathring{H}^{1}
+    \end{equation*}
+    \item Moreover, if $j \neq k$,  we have, as $n \to \infty$.
+    \begin{equation*} \frac{\lambda_{n}^{j}}{\lambda_{n}^{k}}+\frac{\lambda_{n}^{k}}{\lambda_{n}^{j}}+ \frac{\left| x_{n}^{j}-x_{n}^{k} \right|^{2}}{\lambda_{n}^{j}\lambda_{n}^{k}}+\frac{\left| t_{n}^{j}(\lambda_{n}^{j})^{2}-t_{n}^{k}(\lambda_{n}^{k})^{2} \right|}{\lambda_{n}^{j}\lambda_{n}^{k}} \to \infty
+    \end{equation*}
+    This is saying that the bubbles don't interact: if they are close in space,
+    then they must be far apart in time (and vis-versa), and they spread out
+    even more as $n \to\infty$. 
+  \end{enumerate}
+\end{theorem}
+\begin{proof}[Proof of \cref{thm:H1x-linear-profile-decomposition-for-linear-shrodinger}]
+  Let $(g_{n}^{j}f)(x)= \left( \lambda_{n}^{j} \right)^{-\frac{d-2}{2}}f \left(
+    \frac{x-x_{n}^{j}}{\lambda_{n}^{j}} \right) $, let $(g^{j}_{n}f)^{-1}(x)=
+  \left( \lambda_{n}^{j} \right)^{\frac{d-2}{2}}f(\lambda_{n}x+x_{n}) $.
+  Therefore the $\mathring{H}_{x}^{1}$-norms of $f$, $g_{n}^{j}f $, and
+  $(g_{n}^{j})^{-1}f$ are all equal. Moreover,
+  \begin{equation*}
+    \left\langle g_{n}^{j},g \right\rangle_{\mathring{H}^{1}} = \left\langle f, (g_{n}^{j})^{-1}g \right\rangle_{\mathring{H}^{1}}.
+  \end{equation*}
+  Also, define
+  \begin{equation*}
+    \phi^{j}_{n}(x):= \left( \lambda_{n}^{j} \right) \left[ e^{it_{n}^{j}}\phi^{j} \right] \left( \frac{x_{n}^{j}}{\lambda_{n}^{j}} \right)  = \left[ g_{n}^{j}e^{it_{n}\Delta}\phi^{j} \right] (x)
+  \end{equation*}
+  We start by defininig $w^{0}_{n}:=f_{n}$ and assume that we have the
+  decomposition \cref{eq:linear-shrodinger-profile-decomposition} up to $J$ that
+  satisfies properties 2,3, and 4 in the statement of the theorem. Then Ihave
+  $w_{n}^{J},$ and to this I apply the bubble removal proposition (3.2): define
+  \begin{equation*}
+    A_{J} := \lim_{n\to\infty} \norm{w_{n}^{J}}_{H_{x}^{1}}
+  \end{equation*}
+  and define
+  \begin{equation*}
+    \mathcal{E}_{J}:= \norm{e^{it\Delta}w_{n}^{J}}_{L_{t,x}}^{\frac{2(d+2)}{d-2}}.
+  \end{equation*}
+  If $\mathcal{E}_{J}=0$ we are done and $J=J^{*}$. If $\mathcal{E}_{J} \neq 0$
+  then continue with proposition 3.5 (in Visan). We will continue this. 
+\end{proof}
+
+Make-up class on Friday. We will use slides. 
 
 \end{document}
 
