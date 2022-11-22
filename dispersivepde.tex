@@ -21,7 +21,7 @@
 \usepackage[ruled,vlined]{algorithm2e}
 % References
 \usepackage[capitalize]{cleveref}
-
+ 
 % This code makes widecheck for Fourier transform. Usage: \widecheck{blah blach}
 \makeatletter
 \DeclareRobustCommand\widecheck[1]{{\mathpalette\@widecheck{#1}}}
@@ -1877,6 +1877,7 @@ the Stricharz norm of $e^{it\Delta}f$ is controlled by a dyadic piece. This
 suggests that maybe we can subtract out the parts where the norms are
 concentrated. Recall also \cref{lem:bubble-concentration} (Prop 3.2 in Visan),
 which we stated but did not prove. This is the ``bubble removal proposition''. You should read the proof in Visan.
+<<<<<<< HEAD
 
 The nonlinear problem will be similar to the linear problem but with some errors
 but these will be perturbative. This is the stability argument in Chapter 5 of
@@ -1967,6 +1968,267 @@ The next result is Theorem (4.1) in Visan.
 \end{proof}
 
 Make-up class on Friday. We will use slides. 
+=======
+>>>>>>> 374e2576e46d7c2ab1a6fe95bb418b98944855a4
+
+The nonlinear problem will be similar to the linear problem but with some errors
+but these will be perturbative. This is the stability argument in Chapter 5 of
+Visan.
+
+<<<<<<< HEAD
+\section{2022-11-21: Lecture Notes}
+=======
+[More discussion about the meaning of the statement of
+\cref{lem:bubble-concentration}].
+>>>>>>> 374e2576e46d7c2ab1a6fe95bb418b98944855a4
+
+The next result is Theorem (4.1) in Visan.
+
+\begin{theorem}[$\mathring{H}_x^1$ linear profile decomposition for linear Shrodinger]
+  \label{thm:H1x-linear-profile-decomposition-for-linear-shrodinger}
+  Fix $d \geq 3$ and let $f_{n}$ be a sequence of bounded functions in
+  $\mathring{H}_{x}^{1}(\R^d)$. Passing to a subsequence, there exists $J^{*}\in
+  \left\{1,2,\ldots\right\}\cup \left\{\infty\right\}$, functions
+  $\left\{\phi^{j}: j=1,\ldots,J^{*}\right\}\subset \mathring{H}_{x}^{1}$,  a
+  sequence $\left\{\lambda_{n}^{j}\right\}\subset (0,\infty)$, and points
+  $\left\{(t_{n}^{j},x_{n}^{j}\right\}\subset \R\times\R^{n}$ such that for each
+  finite $J\in \left\{0,\ldots,J^{*}\right\}$, we have the following
+  decomposition:
+  \begin{equation}\label{eq:linear-shrodinger-profile-decomposition}
+    f_{n}= \sum_{j=1}^{J} \left( \lambda_{n}^{j} \right)^{-\frac{d-2}{2}}\left[ e^{it_{n}\Delta}\phi^{j} \right]\left( \frac{x-x_{n}^{j}}{x_{m}^{j}} \right) + w_{m}^{J}.
+  \end{equation}
+  This decomposition has the following properties:
+  \begin{enumerate}
+    \item The function $w_{m}^{J}$ is small in the space-time norm:
+    \begin{equation*}
+      \lim_{J\to J^{*}} \limsup_{n\to\infty} \norm{e^{it\Delta}w_{n}^{J}}_{L_{t,x}^{\frac{2(d+2)}{d-2}}}.
+      = 0
+    \end{equation*}
+    \item Subtracting out all the bubbles gives something which converges to
+    zero:
+    \begin{equation*}
+      \lim_{n\to\infty} \left[ \norm{\nabla f_{n}}_{L^{2}}^{2}- \sum_{j=1}^{J}\norm{\nabla \phi^{j}}_{L^{2}}^{2}- \norm{\nabla w_{n}^{J}}_{L^{2}}^{2}  \right]  = 0.
+    \end{equation*}
+    \item Subtracting all the energy that all the profiles measured in the
+    space-time (and measuring in the same space), then subtracting the
+    remainder, converges to zero. (This is like applying
+    \cref{lem:bubble-concentration} many times).
+    \begin{equation*}
+      \lim_{n\to\infty}
+      \left[ \norm{f_{n}}_{L_{t,x}^{\frac{2d}{d-2}}}^{\frac{2d}{d-2}}
+        -\sum_{j=1}^{J}
+        \norm{e^{it_{n}^{j}\Delta}\phi^{j}}_{L_{t,x}^{\frac{2d}{d-2}}}^{\frac{2d}{d-2}}
+      \right] 
+      = 0
+    \end{equation*}
+    \item
+    \begin{equation*}
+      e^{-it_{n}^{J}}\left[ \left( \lambda_{n}^{J}
+        \right)^{\frac{d-2}{2}}w_{n}^{J}(\lambda_{n}^{J}+x_{n}^{J})  \right]
+      \rightharpoonup  0 \text{ weakly in }\mathring{H}^{1}
+    \end{equation*}
+    \item Moreover, if $j \neq k$,  we have, as $n \to \infty$.
+    \begin{equation*} \frac{\lambda_{n}^{j}}{\lambda_{n}^{k}}+\frac{\lambda_{n}^{k}}{\lambda_{n}^{j}}+ \frac{\left| x_{n}^{j}-x_{n}^{k} \right|^{2}}{\lambda_{n}^{j}\lambda_{n}^{k}}+\frac{\left| t_{n}^{j}(\lambda_{n}^{j})^{2}-t_{n}^{k}(\lambda_{n}^{k})^{2} \right|}{\lambda_{n}^{j}\lambda_{n}^{k}} \to \infty
+    \end{equation*}
+    This is saying that the bubbles don't interact: if they are close in space,
+    then they must be far apart in time (and vis-versa), and they spread out
+    even more as $n \to\infty$. 
+  \end{enumerate}
+\end{theorem}
+\begin{proof}[Proof of \cref{thm:H1x-linear-profile-decomposition-for-linear-shrodinger}]
+  Let $(g_{n}^{j}f)(x)= \left( \lambda_{n}^{j} \right)^{-\frac{d-2}{2}}f \left(
+    \frac{x-x_{n}^{j}}{\lambda_{n}^{j}} \right) $, let $(g^{j}_{n}f)^{-1}(x)=
+  \left( \lambda_{n}^{j} \right)^{\frac{d-2}{2}}f(\lambda_{n}x+x_{n}) $.
+  Therefore the $\mathring{H}_{x}^{1}$-norms of $f$, $g_{n}^{j}f $, and
+  $(g_{n}^{j})^{-1}f$ are all equal. Moreover,
+  \begin{equation*}
+    \left\langle g_{n}^{j},g \right\rangle_{\mathring{H}^{1}} = \left\langle f, (g_{n}^{j})^{-1}g \right\rangle_{\mathring{H}^{1}}.
+  \end{equation*}
+  Also, define
+  \begin{equation*}
+    \phi^{j}_{n}(x):= \left( \lambda_{n}^{j} \right) \left[ e^{it_{n}^{j}}\phi^{j} \right] \left( \frac{x_{n}^{j}}{\lambda_{n}^{j}} \right)  = \left[ g_{n}^{j}e^{it_{n}\Delta}\phi^{j} \right] (x)
+  \end{equation*}
+  We start by defininig $w^{0}_{n}:=f_{n}$ and assume that we have the
+  decomposition \cref{eq:linear-shrodinger-profile-decomposition} up to $J$ that
+  satisfies properties 2,3, and 4 in the statement of the theorem. Then Ihave
+  $w_{n}^{J},$ and to this I apply the bubble removal proposition (3.2): define
+  \begin{equation*}
+    A_{J} := \lim_{n\to\infty} \norm{w_{n}^{J}}_{H_{x}^{1}}
+  \end{equation*}
+  and define
+  \begin{equation*}
+    \mathcal{E}_{J}:= \norm{e^{it\Delta}w_{n}^{J}}_{L_{t,x}}^{\frac{2(d+2)}{d-2}}.
+  \end{equation*}
+  If $\mathcal{E}_{J}=0$ we are done and $J=J^{*}$. If $\mathcal{E}_{J} \neq 0$
+  then continue with proposition 3.5 (in Visan). We will continue this. 
+\end{proof}
+
+Make-up class on Friday. We will use slides. 
+
+Last time we covered chapter 7 from Monica's notes. We were proving GWP in the
+critical setting. As long as our energy was below the critical energy, then the
+Strichartz norms were bounded. And if above the critical energy, then they are
+unboudned. We were constructing a solution contradict our ``contradiction
+assumption'' (which was to negate the global existance theorem). 
+
+Recall we had the following proposition
+
+\textbf{Proposition 7.2} (Palais-Smale Condition). Let $u_{n}:I_{n}\times \R^d
+\to \mathbb{C}$  be a sequence of solutions to the defocusing energy critical
+NLS, with $E(u_{n}) \to E_{c}$,  and we can choose a sequence of times
+$t_{1},t_{2},\ldots$, with $t_{n} \in I_{n}$ such that
+\begin{equation*}
+  \lim_{n\to\infty} S_{ \geq t_{n}}(u_{n}) = \lim_{n\to\infty} S_{ \leq t_{n}}(u_{n}) = \infty
+\end{equation*}
+Then, the sequence $u_{n}(t_{n})$ has a subsequence that converges to something
+$\phi$ in $\mathring{H}_{x}^{1}$ modulo scaling and spatial translation.
+\begin{proof}
+  There are two scenarios. Scenario I is easy. Scenario II is harder and
+  involves some stability theory. I missed this part due to computer problems.
+  Recall the definition of Strichartz norms:
+  \begin{equation*}
+    S_{I}(u) 
+    = \int_{I} \int_{\R^d} \left| u(t,x) \right|^{\frac{2(d+2)}{d-2}}dxdt   
+  \end{equation*}
+  Under Scenario II:  let
+  \begin{equation*}
+    u_{n}(0) 
+    = \sum g_{n}^{j} e^{it_{n}^{j}\Delta}\phi_{j}+w_{n}^{j}
+  \end{equation*}
+  where $t_{n}^{j}$ converges to $0, -\infty,+\infty $
+  also
+  $E(\phi_{j})= E_{c}-\delta$
+  and
+  \begin{equation*}
+    u_{n}(t) 
+    = \underbrace{\sum g_{n}^{j}v_{j}^{(t)}}_{(1)}+ \underbrace{\sum g_{n}^{j}v_{j}(t_{n}^{j}+t)}_{(2)}+ \underbrace{\sum \ldots }_{(3)} + e^{it\Delta}w_{n}^{j} + \text{error}
+  \end{equation*}
+  The error goe sto zero if we show that $u_{n}$ is an approximate solution the
+  nonlinear problelm.  There are two steps. First, does the initial data
+  converges to zero, i.e.  $u_{n}(0)\to 0$. This comes from the assumption.
+
+  \begin{equation*}
+    \lim_{t \to \infty }  \norm{u_{n}(t)
+      - e^{it\Delta}u_{+}}_{\mathring{H}_{x}^{1}}\to 0
+  \end{equation*}
+  \pnote{Missed some more things...}
+
+\end{proof}
+
+Now we show that we have a minimal blow up solution. Recall we negated the
+global existance. But we have local existence of solution and finite
+strichartz norms.
+
+\begin{theorem}[Minimal Blow Up Solution]
+  \label{thm:minimal-blow-up-solution}
+  Suppose our energy critical GWP result (for the defocusing case, $d=4$ or
+  greater), then there exists a critical energy $0<E<\infty$ and a maximal
+  lifespan solution $u: I\times \R^d \to \mathbb{C}$ to our problem with
+  \begin{equation*}
+    E(u) = E_{c}
+  \end{equation*}
+  which blows up in all time directions (i.e. above a certain time and below a
+  certain time). That is,
+  \begin{equation*}
+    S_{ \geq 0}(u) = \infty
+    \quad \text{and} \quad
+    S_{ \leq 0}(u) = \infty
+  \end{equation*}
+  and $\left\{u(t) : t\in \R\right\}$ is precompact in $\mathring{H}_{x}^{1}$
+  modulo scaling $u(t,x)$ and spatial symmetries.
+  \begin{proof}
+    Contradicting GWL result: there exists a critical energy $0<E_{c}<\infty$
+    and solutions $u_{n}: I \times \R^d \to \mathbb{C}$ such that
+    \begin{equation*}
+      \left\{ \begin{array}{l@{\quad:\quad}l}
+          E(u_{n})<E_{c} & S_{I_{n}}<\infty\\
+          E(u_{n}) \geq E_{c}& S_{I_{n}}(u_{n}) = \infty
+        \end{array}\right.
+    \end{equation*}
+    and
+    \begin{equation*}
+      E(u_{n}) \to E_{c} \quad \text{and} \quad S_{I_{n}}(u_{n}) \to \infty.
+    \end{equation*}
+    Let $t_{n}\in I_{n}$ be such that
+    \begin{equation*}
+      S_{ \geq t_{n}}= S_{ \leq t_{n}}= \frac{1}{2}S_{I_{n}}(u_{n}) 
+    \end{equation*}
+    Then
+    \begin{equation}\label{eq:17}
+      \lim_{n\to\infty} S_{ \geq t_{n}}(u_{n}) = \lim_{n\to\infty} S_{ \leq
+        t_{n}}(u_{n}) = \infty
+    \end{equation}
+    Thus we are exactly in the situation where the hypotheses of the
+    Palais-Smale Condition are satisfied. So we can apply the Palais-Smale
+    Theorem. Therefore there exists a subsequence $\left\{t_{n}\right\}$ of
+    times such that
+    \begin{equation*}
+      u_{n}(t_{n}) \to \phi \quad \text{ in } \mathring{H}_{x}^{1}
+    \end{equation*}
+    modulo scaling and translations in space. So choose the right rescaling and
+    translate in space so that we get convergence in the sense that
+    \begin{equation*}
+      u_{n}(t_{n}) \to \phi \quad \text{ in } \mathring{H}_{x}^{1}. 
+    \end{equation*}
+    Now what happens to the energy $E(u_{n})$? Recall we are given that
+    $E(u_{n}) \to E_{c}$  and we just got $u_{n} \to \phi$. And this implies
+    that
+    \begin{equation*}
+      E(\phi) = E_{c}.
+    \end{equation*}
+    Now, let's think at $u: I\times \R^{d} \to \mathbb{C}$ be the maximal (in
+    time) solution [Note: we know it's not a global assumpt because we assumed
+    no global solution] for our NLS problem with initial data $u(0,x)=\phi$.
+    This gives rise to a solution which doesn't last forever and this is our
+    maximal in time solution. But then by \cref{eq:17}, I claim that
+    \begin{equation}\label{eq:18}
+      S_{ \geq 0}(u) = S_{ \leq 0}(u) = \infty
+    \end{equation}
+    but the issue is not straightforward because we need some stability theory,
+    because the $u(t)$ in the above equation is the solution, not the inital
+    data.  (Theorem 5.3 Stability Theory).
+
+    Now we need to prove the precompactness portion of the theorem
+    $\left\{t_{n}^{1}\right\}_{n}$ some sequence of times $I$.  We have by
+    \cref{eq:18} that
+    \begin{equation*}
+      S_{ \geq t^{1}_{n}} (u(t)) = S_{ \leq t^{1}_{n}}(u(t))= \infty
+    \end{equation*}
+    we can now apply Palais-Smale Theorem again to extract a convergence
+    subsequence of $\left\{ t^{1}_{n} \right\}$ that converges to something in
+    $\mathring{H}_{x}^{1}$ modulo scaling and space translations.
+    
+    (The difference from the first time we applied Palais-Smale is that fixed
+    the $u$ and moved the times, rather than fixing $t$ and moving the
+    $u_{n}$'s.)
+
+    The conclusion is that we have shown that a solution $u(t,x)$ as above
+    exists. This is the bad guy.
+
+    Next, in Chapters 9 and 10, we will preclude the existence of such a bad
+    guy. We will need to know a bit more about the solution $u(t,x)$. So we'll
+    need to learn a few more properties about it in order to later show that it
+    actually doesn't exist.
+
+    Some properties of $u(t,x)$ that we just constructed:
+    \begin{itemize}
+      \item (A funny-sounding characterization.) We will call this solution (the
+      one in the theorem) ``almost periodic modulo symmetries''. What does this
+      mean? It means if we cut our interval $I$ into pieces then every
+      subinterval of $I$ will have the same sort of solution. This is because of
+      compactness.
+
+      \textbf{Claim: }Suppose you have a family of functions which is precompact
+      in $L^{2}(\R^d)$ (or $H^{1}$ in our application) if and only if it
+      satisfies the following two conditions: (i)
+
+      We'll need only the forward direction of the above if and only if
+      statement. This is because we have shown that 
+    \end{itemize}
+    
+    
+  \end{proof}
+\end{theorem}
 
 \end{document}
 
