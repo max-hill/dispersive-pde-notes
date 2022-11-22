@@ -2223,12 +2223,236 @@ strichartz norms.
       satisfies the following two conditions: (i)
 
       We'll need only the forward direction of the above if and only if
-      statement. This is because we have shown that 
+      statement. This is because we have shown that
+
+      \pnote{missed the ending of the lecture :(}
     \end{itemize}
-    
-    
   \end{proof}
 \end{theorem}
+
+\section{Lecture Notes: 2022-11-22}
+Recall we are doing the GWPfor energy critical NLS. We are doing dimension $n=4$
+so the NLS will have nonlinear part $N(u)=|u|^{2}u$.
+
+\textbf{Strategy:} We use a proof by contradiciton. First assume we don't have a
+global solution. But we might have a local solution but then we use Palais-Smale
+Theorem twice to construct a solution with certain properties (the ``bad guy'')
+with a subsequence converging in $\mathring{H}^{1}_{x}$. This is the
+\textbf{minimal blow-up solution}, and this is our enemy. Then our goal is to
+show that this solution $u(t,x)I \times \R^d \to \mathbb{C}$ satisfies certain
+properties, characterized using the following functions:
+first, the \textbf{frequency scale function} 
+\begin{equation*}
+  N(t): I \to \R^{+}.
+\end{equation*}
+Second, the \textbf{spatial center function}
+\begin{equation*}
+  x:I \to \R^d 
+\end{equation*}
+This is the $x$ about which your solution constructed from Palais-Smale is
+situated. Third, the \textbf{compactness modulus function}
+\begin{equation*}
+  C:\R^{+}\to \R^{+}
+\end{equation*}
+Last time we proved \textbf{Theorem 8.1[V]} which showed the existence of a minimal
+blowup solution to NLS, but it also gave us another thing: the following set,
+called the \textbf{orbit}, 
+\begin{equation*}
+  \left\{ u(t):t\in \R \right\}
+\end{equation*}
+is precompact in $H^{1}_{x}$ if and only if...
+
+This led to the identity
+\begin{equation*}
+  \int_{|x-x(t)| \geq C(\eta)/N(t)} \left| \nabla u(t,x) \right|^{2}dx
+  + \int_{\left| \xi \right| \geq C(\eta)} \left| \xi \hat{u}(t,\xi) \right|^{2}d\xi 
+  \leq \eta
+\end{equation*}
+This property is satisfied by our enemy $u$. But after proving this property, we
+will close the argument (i.e. to get a contradiction to the assumption of no
+global-in-time solution) we need to give some characterization of $u(t,x)$ via
+the functions $N(t),x(t)$ and $C(\eta)$ and then show you that sucha minimal
+solution cannot exist. The properties which are satisfied will lead to a
+contradiction.
+\begin{definition}[Normalized Solution]
+  \label{def:normalized-solution}
+  Let $u:I\times \R^d  \to \mathbb{C}$ be the minimal blowup solution
+  constructed above using Theorem 8.1., with associated $N(t), C$ and $x(t)$.
+  Then we say that $u$ is \textbf{normalized} if $0\in I$ and
+  \begin{equation*}
+    N(0) = 1
+    \quad \text{and} \quad
+    x(0)=0.
+  \end{equation*}
+  In general we can define the \textbf{normalization} of a solution $u$ at any
+  time $t_{0}\in I$ by
+  \begin{equation*}
+    u^{[t_{0}]}(s,x) = N(t_{0})^{-\frac{d-2}{2}}u\left(t_{0}+N(t_{0})^{-2}s,x(t_{0})+N(t_{0})^{-1}x\right)
+  \end{equation*}
+  where
+  \begin{equation*}
+    N^{[t_{0}]}(s):= \frac{N(t_{0}+sN(t_{0})^{-2})}{N(t_{0})}
+  \end{equation*}
+  and
+  \begin{equation*}
+    x^{[t_{0}]}(s) := N(t_{0})\left[ x(t_{0}+sN(t_{0})^{-2})-x(t_{0}) \right] 
+  \end{equation*}
+  (This is because the time scales like $N^{-2}(t)$ and space scales like $N^{-1}(t)$.) 
+\end{definition}
+
+There will be 3 properties, which are Lemmas 8.3, 8.4, and 8.5 in Visan's
+notes.
+
+First, \textbf{Property 1 (Lemma 8.3[V])} says that your solution will be concentrated in a rectangle
+about $(x_{0},t_{0})$, with dimensions $H^{-2}$ and $H^{-1}(t_{0})$.
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[scale=.5]{Visan-Lemma-8.3}
+  \caption{Property 1 (Lemma 8.3 in Visan)}
+  \label{fig:lem8.3}
+\end{figure}
+\textbf{Property 2 (Lemma 8.4[V])} says that the space-time norm of the solution is concentrated in
+adjacent rectangles.
+\begin{center}
+  \begin{figure}[h]
+    \centering \includegraphics[scale=.5]{Visan-Lemma-8.4}
+  \caption{Property 1 (Lemma 8.3 in Visan)}
+  \label{fig:lem8.4}
+\end{figure}
+\end{center}
+
+We claim that as $T \to \infty$, $N(t)\to \infty$. \pnote{This section got
+  garbled as I tried to figure out how to add pictures.}
+
+
+And also \textbf{Property 3 (Lemma 8.5[V])} which says that the Strichartz norms of the
+solution $u$ satisfies
+\begin{equation*}
+  \int_{I}N(t)^{2} dt  \lesssim \norm{u}_{L_{t,x}^{\frac{2(d+2)}{d-2}}} \leq 1 +\int_{I} N(t)^{2}dt 
+\end{equation*}
+\begin{figure}[h]
+  \centering
+  \includegraphics[scale=.5]{Visan-Lemma-8.5}
+  \caption{Property 3 (Lemma 8.5 in Visan)}
+  \label{fig:lem8.5}
+\end{figure}
+
+Then \textbf{Lemma 8.6[V]} will give a similar bound
+\begin{equation*}
+  \norm{u}_{L_{t}^{2}L^{\frac{2d}{d-2}}} \leq 1 + \int_{I}N(t)^{2}dt 
+\end{equation*}
+
+and then \textbf{Proposition 8.6[V] (Duhamel Reduced)} (see \cref{fig:lem8.6},
+this is essential for proving long-time Strichartz, but not used elsewhere).
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[scale=.5]{Duhamel-Reduced}
+  \caption{Lemma 8.6[V]}
+  \label{fig:lem8.6}
+\end{figure}
+
+\subsection{Closing the Argument}
+Now, let's eliminate the existence of such a minimal blow-up solution. First, we
+get either (A) that
+\begin{equation*}
+  \int_{0}^{T_{\rm max}}N(t)^{-1} dt <8 
+\end{equation*}
+(by putting all the lemmas together), or you get (B) that
+\begin{equation}\label{eq:19-caseb}
+  \int_{0}^{T_{\rm max}} N(t)^{-1}dt = \infty.
+\end{equation}
+To preclude case (A), we use a long-time Strichartz estimate from Dodson. To
+preclude case (B), we use something called the ``Interaction Morawetz
+estimate''.
+
+\subsection{Case (A): Discussion of the Long-Time Strichartz Estimate}
+
+The Long-Strichartz Estimate is \textbf{Theorem 9.1[V]}.
+
+Let $u: [0,T_{\rm max}]\times \R^{4}\to \mathbb{C}$, with $N(t) \equiv N_{k}
+\geq 1$ on each subinterval $J_{k}$ of $[0,T_{\rm max})$. Then for each compact
+time interval $I\subset [0,T_{\rm max})$ (think: $I=J_{1}\sqcup J_{2}\sqcup
+\cdots \sqcup J_{k}$), we have
+\begin{equation*}
+  \norm{\nabla u_{ \leq  m}}_{L_{t}^{2}L_{x}^{4}(I\times \R^4)}\lesssim1 + m^{3/2}k^{1/2}
+\end{equation*}
+for energy $m>0$, where $k = \int_{I} N(t)^{-1}dt<\infty$.
+
+We won't go through the proof in class, but it's not bad -- it uses standard
+inequalities, Bernstein, etc. And then this long Strichartz estimate will be
+used in the ``no rapid frequency cascade'' theorem which will show that the mass
+$M(t)\equiv 0$ but this is a contradiction because $u$ is not identically zero.
+These are the main ideas of the proof.
+
+\subsection{Case (B): Discussion of the Interaction Morawetz Estimate}
+Here we will discuss why \cref{eq:19-caseb} can't happen. Why? First, consider
+the following easy case where we assume the solution is radially symmetric (this
+assumption is not made for the general proof, but we are using it to illustrate
+the main idea).  Introduce a functional called the \textbf{Morawetz action}:
+\begin{equation*}
+  M(t) := 2 \mathrm{Im} \int_{\R^{4}}\overline{u(t,x)}\nabla u(t,x) \cdot \frac{x}{|x|}dx
+\end{equation*}
+imagine $u$ is a solution to energy critical NLS (defocusing) made of many
+particles and centered around $x$. We have
+
+\begin{equation*}
+  \partial_{t}M(t) 
+  \geq 2 \int_{\R^{4}} \frac{\left| u(t,x) \right|^{2}}{|x|^{3}}dx
+  + \int_{\R^{4}} \frac{\left| u(t,x) \right|^{4}}{|x|}dx  
+\end{equation*}
+Then integrating with respect to time and using the Cauchy-Schwarz inequality, 
+\begin{equation*}
+  \int_{I}\int_{\R^{4}} \frac{\left| u(t,x) \right|^{4}}{|x|}dxdt 
+  \leq \norm{u}_{L^{\infty}_{t}L_{x}^{2}(I \times \R^{4})} \norm{u}_{L^{\infty}_{t}\mathring{H}_{x}^{1}}
+\end{equation*}
+So we have $u\in H_{x}^{1}$ (because $u\in L^{2}$ and its gradient is in
+$\mathring{H}^{1}$). But this raises an issue: (1) it favors the origin and (2)
+it says that $u\in H_{x}^{1}$, but our solution $u$ was constructed
+as a limit of $\mathring{H}_{x}^{1}$ functions.
+
+A modification can be shown:
+\begin{equation*}
+  \int_{I}\int_{|x| \leq A |I|^{\frac{1}{2}}} \frac{\left| u(t,x) \right|^{4}}{|x|}dxdt 
+  \lesssim A|I|^{\frac{1}{2}} \norm{u}_{L_{t}^{\infty}\mathring{H}_{x}^{1}(I\times \R^{4})}^{2}
+\end{equation*}
+and we can use this now Morawetz estimate to preclude case (B).
+
+\textbf{Step 1.} We claim that the $u(t)$ that we got from Therem 8.1[V], plus
+the additional assumption of radial symmetry, is concentrated near the origin.
+To prove this, consider if there is concentration of energy at a point away from
+the origin (i.e. at some point with $|x| \geq N(t)^{-1}$), then by radial
+symmetry the energy is concentrated at other points too, as shown in
+\cref{fig:radial-symmetry}. So only concentration at the origin is possible.
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[scale=.5]{radial-symmetry}
+  \caption{Step 1.}
+  \label{fig:radial-symmetry}
+\end{figure}
+
+
+\textbf{Step 2.} Skipping some steps we get the following inequality which
+precludes case (B):
+\begin{equation*}
+  |I|^{\frac{1}{2}} \geq  \int_{I} N(t)dt.
+\end{equation*}
+
+
+So far we have assumed radial symmetry to preclude case (B). But we can do a similar arugment without
+that assupmtion. For the general case, we substitute the Morawetz inequality by
+the \textbf{interaction Morawetz inequality}:
+\begin{equation*}
+  M_{\rm interaction}(t) 
+  = 2 \mathrm{Im} \int_{\R^4 }\int_{\R^4 }  \overline{u(t,x)}\nabla u(t,x) \frac{x-y}{|x-y|} \left| u(t,y) \right|^{2}dxdy
+\end{equation*}
+which is the version that is frequency-localized. We have outlined the main
+ideas. Next time we will go through how to do global existence for things that
+look like NLS: i.e. which linearly look like NLS and are defocusing. We will be
+able to eliminate some assumptions (e.g. localization and some conservation
+quantities). We will get some global-in-time Strichartz.
 
 \end{document}
 
