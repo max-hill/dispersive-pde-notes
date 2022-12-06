@@ -3,6 +3,7 @@
 \usepackage[utf8]{inputenc}
 
 % Math Packages
+\usepackage{float}
 \usepackage{amsmath, mathtools}
 \usepackage{amssymb}
 \usepackage{amsthm}
@@ -2231,7 +2232,8 @@ strichartz norms.
 \end{theorem}
 
 \section{Lecture Notes: 2022-11-22}
-Recall we are doing the GWPfor energy critical NLS. We are doing dimension $n=4$
+\subsection{Strategy: The enemy $u$ and how we will defeat him}
+Recall we are doing the GWP for energy critical NLS. We are doing dimension $n=4$
 so the NLS will have nonlinear part $N(u)=|u|^{2}u$.
 
 \textbf{Strategy:} We use a proof by contradiciton. First assume we don't have a
@@ -2300,58 +2302,80 @@ contradiction.
   (This is because the time scales like $N^{-2}(t)$ and space scales like $N^{-1}(t)$.) 
 \end{definition}
 
+\subsection{Know Your Enemy: Properties of $u$}
+
 There will be 3 properties, which are Lemmas 8.3, 8.4, and 8.5 in Visan's
 notes.
+\begin{itemize}
+  \item \textbf{Property 1 (Lemma 8.3[V])} says that your solution will
+  be concentrated in a rectangle about $(x_{0},t_{0})$, with length on the
+  order of $N^{-2}(t_{0})$ in the time direction and width in the space
+  direction on the order $N^{-1}(t_{0})$.
 
-First, \textbf{Property 1 (Lemma 8.3[V])} says that your solution will be concentrated in a rectangle
-about $(x_{0},t_{0})$, with dimensions $H^{-2}$ and $H^{-1}(t_{0})$.
+  \begin{figure}[H]
+    \centering \includegraphics[scale=.5]{Visan-Lemma-8.3}
+    \caption{Property 1 (Lemma 8.3 in Visan)}
+    \label{fig:lem8.3}
+  \end{figure}
 
-\begin{figure}[h]
+  And then says that space-time norm of the solution is concentrated in adjacent
+  rectangles?
+  \begin{center}
+    \begin{figure}[H]
+      \centering \includegraphics[scale=.5]{Visan-Lemma-8.4}
+      \caption{Property 1 (Corollary 8.4 in Visan ?)}
+      \label{fig:lem8.4}
+    \end{figure}
+  \end{center}
+  
+  \item \textbf{Property 2 (Corollary 8.4[V])} This property is about the
+  behavior of the frequency-scale function $N$. As $t\to\infty$,
+  $N(t)\to \infty$. \pnote{(Is this it?)}
+
+  
+
+ 
+  \begin{figure}[H]
+    \centering \includegraphics[scale=.6]{Visan-Lemma-8.5}
+    \caption{Property 2 (Lemma 8.4 in Visan)}
+    \label{fig:lem8.5}
+  \end{figure}
+\end{itemize}
+
+\begin{figure}[H]
   \centering
-  \includegraphics[scale=.5]{Visan-Lemma-8.3}
-  \caption{Property 1 (Lemma 8.3 in Visan)}
-  \label{fig:lem8.3}
-\end{figure}
-\textbf{Property 2 (Lemma 8.4[V])} says that the space-time norm of the solution is concentrated in
-adjacent rectangles.
-\begin{center}
-  \begin{figure}[h]
-    \centering \includegraphics[scale=.5]{Visan-Lemma-8.4}
-  \caption{Property 1 (Lemma 8.3 in Visan)}
+  \includegraphics[scale=.5,trim={0 12.1cm 2cm 0},clip]{Duhamel-Reduced}
+  \caption{Lemma 8.4[V]}
   \label{fig:lem8.4}
 \end{figure}
-\end{center}
 
-We claim that as $T \to \infty$, $N(t)\to \infty$. \pnote{This section got
-  garbled as I tried to figure out how to add pictures.}
-
-
-And also \textbf{Property 3 (Lemma 8.5[V])} which says that the Strichartz norms of the
-solution $u$ satisfies
+\textbf{Property 3 (Lemma 8.5[V])} which says that the Strichartz norms
+of the solution $u$ satisfies
 \begin{equation*}
   \int_{I}N(t)^{2} dt  \lesssim \norm{u}_{L_{t,x}^{\frac{2(d+2)}{d-2}}} \leq 1 +\int_{I} N(t)^{2}dt 
 \end{equation*}
-\begin{figure}[h]
-  \centering
-  \includegraphics[scale=.5]{Visan-Lemma-8.5}
-  \caption{Property 3 (Lemma 8.5 in Visan)}
-  \label{fig:lem8.5}
-\end{figure}
+
 
 Then \textbf{Lemma 8.6[V]} will give a similar bound
 \begin{equation*}
-  \norm{u}_{L_{t}^{2}L^{\frac{2d}{d-2}}} \leq 1 + \int_{I}N(t)^{2}dt 
+  \norm{\nabla u}_{L_{t}^{2}L_{x}^{\frac{2d}{d-2}}} \lesssim 1 + \int_{I}N(t)^{2}dt 
 \end{equation*}
 
-and then \textbf{Proposition 8.6[V] (Duhamel Reduced)} (see \cref{fig:lem8.6},
-this is essential for proving long-time Strichartz, but not used elsewhere).
+and then \textbf{Proposition 8.7[V] (Duhamel Reduced)} says that that for the minimal
+blowup solution, the portion of the $u$ which is not the Duhamel term converges
+weakly to zero in $\mathring{H}_{x}^{1}$. That is, as $t_{2}\to 0,$
 
-\begin{figure}[h]
-  \centering
-  \includegraphics[scale=.5]{Duhamel-Reduced}
-  \caption{Lemma 8.6[V]}
-  \label{fig:lem8.6}
-\end{figure}
+\begin{equation*}
+  u(t_{1}) 
+  = \underbrace{e^{(t_{1}-t_{2})}u(t_{2})}_{\to 0 \text{ weakly}} +
+    \underbrace{\int_{t_{1}}^{t_{2}}e^{i(t_{1}-t_{2})\Delta }|u|^{2}u
+    dt_{1}}_{\text{Duhamel Term}}
+\end{equation*}
+
+\pnote{Is this right?}
+This is essential for proving long-time Strichartz, but not used elsewhere.
+
+
 
 \subsection{Closing the Argument}
 Now, let's eliminate the existence of such a minimal blow-up solution. First, we
@@ -2454,6 +2478,131 @@ look like NLS: i.e. which linearly look like NLS and are defocusing. We will be
 able to eliminate some assumptions (e.g. localization and some conservation
 quantities). We will get some global-in-time Strichartz.
 
+\section{Lecture: 2022-12-06}
+Topic: Local well-posedness for the defocusing Model NLS (MNLS), which is
+\begin{equation*}
+  \left\{ \begin{array}{l@{}l}
+      iu_{t}+u_{xx}=C(u,\bar{u},u) \\
+      u(0,x)=u_{0}
+    \end{array}\right.
+\end{equation*}
+Here, $X \subset C([0,1],L^{2})$.  First use a fixed point argument to get LWP
+(using $X$, Duhamel formula). Then you can go further for global.
+
+This is \textbf{Prop 1.38[Tao]} which splits the fixed point argument into two bits: a
+linear and nonlinear part, which are treated differently. Two estimates:
+\begin{itemize}
+  \item (Linear Part). The space $X$ has norm
+  \begin{equation*}
+    \norm{u}_{X}^{2} = \sum_{k\in \mathbb{Z}}  \norm{u_{k}}_{X_{k}}
+  \end{equation*}
+  where
+  \begin{equation*}
+    \norm{u_{k}}_{X_{k}}= \sum_{j\in \mathbb{Z}}
+    \norm{\chi_{j}(t,x-2tk)u_{k}}_{L_{t}^{\infty}L_{x}^{2}}^{2}
+  \end{equation*}
+  where $\left\{\chi_{k}: k\in \mathbb{Z}\right\}$ is a partition of unity in
+  \textit{space} (i.e. the $x$ variable). So now we also need the $Y$ and we
+  choose it so that its dual is $X$, i.e. $Y^{*} = X$. Then
+  \begin{equation*}
+    \norm{f}_{Y}^{2} = \sum_{k\in \mathbb{Z}}\norm{f_{k}}_{Y_{k}}^{2} 
+  \end{equation*}
+  where
+  \begin{equation*}
+    \norm{f_{k}}_{Y_{k}}^{2} = \sum_{j\in \mathbb{Z}}\norm{\lambda_{j}(t,x-2kt)f_{k}}_{L_{t}^{1}L_{x}^{2}}^{2}
+  \end{equation*}
+  \textbf{Lemma 3.3} gives the solution to the linear Schroedinger equation
+  \begin{equation*}
+    \left\{ \begin{array}{l@{}l}
+        (iu_{t}+\partial_{x}^{2})u= f\\
+        u(0,x)=u_{0}
+      \end{array}\right.
+  \end{equation*}
+  in the time interval $[0,1]$ satisfies
+  \begin{equation}\label{eq:19}
+    \norm{u}_{X} \lesssim \norm{u_{0}}_{L^{2}}+ \norm{f}_{Y}
+  \end{equation}
+  \item (Nonlinear Part). By \textbf{Lemma 3.4} for the cubic nonlinearity $C$,
+  we have the bound 
+  \begin{equation}\label{eq:20}
+    \norm{C(u,\bar{u},u)}_{Y}\lesssim \norm{u}_{X}^{3}
+  \end{equation}
+      
+\end{itemize}
+Then using the estimates for these two cases, we obtain a contraction and apply
+the fixed point theorem. First we will prove \textbf{Lemma 3.3}:
+
+\begin{proof}[Proof of \cref{eq:19}]
+  It suffices to prove
+  \begin{equation}\label{eq:21}
+    \norm{u_{k}}_{X_{k}} \lesssim \norm{u_{0,k}}_{L^{2}} +\norm{f_{k}}_{X_{k}}
+  \end{equation}
+  because we can then sum over $k$ which then gives \cref{eq:19}. Using
+  Galileian invariance to move from frequency $k$ to frequency $0$. Define
+  \begin{equation*}
+    v(t,x) = e^{-i(kx+k^{2}t)}u_{k}(t,x-2kt)
+  \end{equation*}
+  and
+  \begin{equation*}
+    v_{0}(0,x) = e^{-ikx}u_{0,k}
+  \end{equation*}
+  and
+  \begin{equation*}
+    g(t,x) = e^{-i(kx+k^{2}t)}f_{k}(t,x=2kt).
+  \end{equation*}
+  Observe that $v,v_{0},$ and $g$ satisfy
+  \begin{equation*}
+    (i\partial_{t}+\partial_{x})v = g \quad \text{ with}\quad v(0)=v_{0}
+  \end{equation*}
+  Then we claim that \cref{eq:21} transforms to
+  \begin{equation}\label{eq:22}
+    \norm{v}_{X_{0}} \lesssim \norm{v_{0}}_{L^{2}}+\norm{g}_{Y_{0}}
+  \end{equation}
+  How do we prove \cref{eq:22}? By Duhamel,
+  \begin{equation*}
+    v(t) 
+    = e^{it\partial_{x}^{2}}P_{0}v_{0}
+    + \int_{0}^{t}e^{i(t-s)\partial_{x}^{2}}P_{0}gds 
+  \end{equation*}
+  where $P_{0}$ is a projection. Now we need to localize $v(t)$ spatially:
+  \begin{equation}\label{eq:23}
+    \chi_{j}v(t) 
+    = \sum_{\ell\in\mathbb{Z}}\left(\chi_{j}e^{it\partial_{x}^{2}}
+      P_{0}\chi_{\ell}\ v_{0}
+      +\int_{0}^{t}\chi_{j}e^{i(t-s)\partial_{x}^{2}}
+      P_{0}\chi_{\ell}\ g ds  \right)  
+  \end{equation}
+  The $\chi_{\ell}$ is necessary to measure the intial data and source term in
+  $X_{0}$. Observe that the kernels $e^{it\partial_{x}^{2}}P_{0}$ are uniformly
+  Schwarz on $[0,1]$. So one has $L^{2}$ bound with off-diagonal decay:
+  \begin{equation*}
+    \norm{\chi_{j}e^{it\partial_{x}^{2}}P_{0}\chi_{\ell}}_{L^2\to L^2}
+    \lesssim
+    \left\langle j-\ell \right\rangle^{-N}
+  \end{equation*}
+  where the right-hand side uses the Japanese bracket. This estimate is why we
+  needed the $P_{0}$, because otherwise we wouldn't have this. Now we take
+  \cref{eq:23} and
+  \begin{equation*}
+    \norm{\chi_{j}v}_{L_{t}^{\infty}L_{x}^{2}} \lesssim \sum_{\ell\in \mathbb{Z}} \left\langle j-\ell \right\rangle^{-N}\left( \norm{\chi_{\ell}v_{0}}_{L_{x}^{2}}+\norm{\chi_{\ell}g}_{L_{t}^{1}L_{x}^{2}} \right). 
+  \end{equation*}
+\end{proof}
+Next we will discuss \textbf{Lemma 3.4}. We will actually need a stronger
+estimate which is specific to the frequency. We first need to define
+\textbf{frequency envelopes}.
+\begin{definition}[Frequency Envelope]
+  \label{def:frequency-envelope}
+  Let $\left\{c_{k}\right\}_{k}\subset \ell^{2}$. We say that
+  $\left\{c_{k}\right\}$ is a \textbf{frequency envelope} for $u_{0}$ in $L^2$
+  if
+  \begin{enumerate}
+    \item $\norm{P_{k}u_{0}}_{L^2} \leq c_{k}$
+    \item $c_{k}$ is \textit{slowly varying} in that $\frac{c_{j}}{c_{k}}\leq 2^{\delta \left| j-k \right|}$. (This is a picture).
+  \end{enumerate}
+\end{definition}
+We will modify this definition for our setting using a maximal function. A
+rigorous modification of this definition will be provided in the next class.
+Then we will prove \textbf{lemma 3.4} with and without frequency envelopes. 
 \end{document}
 
 \bibliographystyle{siam.bst}
