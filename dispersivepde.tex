@@ -2539,9 +2539,9 @@ the fixed point theorem. First we will prove \textbf{Lemma 3.3}:
   \end{equation}
   because we can then sum over $k$ which then gives \cref{eq:19}. Using
   Galileian invariance to move from frequency $k$ to frequency $0$. Define
-  \begin{equation*}
+  \begin{equation}\label{eq:24}
     v(t,x) = e^{-i(kx+k^{2}t)}u_{k}(t,x-2kt)
-  \end{equation*}
+  \end{equation}
   and
   \begin{equation*}
     v_{0}(0,x) = e^{-ikx}u_{0,k}
@@ -2603,7 +2603,147 @@ estimate which is specific to the frequency. We first need to define
 We will modify this definition for our setting using a maximal function. A
 rigorous modification of this definition will be provided in the next class.
 Then we will prove \textbf{lemma 3.4} with and without frequency envelopes. 
+\section{Lecture: 2022-12-08}
+[Missed the beginning of this lecture]
+
+\subsection{Frequency Envelopes}
+Frequency envelopes.
+\begin{definition}[Maximal Property]
+  \label{def:maximal-property}
+  A lattice frequency envelope $\mathcal{C}= \left\{c_{k}\right\}_{k}$  is said
+  to have the maximal property if
+  \begin{equation*}
+    M_{\mathcal{C}} \leq  C \mathcal{C}
+  \end{equation*}
+  
+where $C$ is a constant and $M_{\mathcal{C}}$ is the maximal funcito nof hte
+sequence $\mathcal{C}$.   
+\end{definition}
+
+\begin{lemma}[Lemma 22]
+  Any $\ell^{2}$ frequency envoelope $\mathcal{C}^{0}=\left\{ C^{0}_{k}
+  \right\}_{k\in \mathbb{N}}$ can be placed under a...  maximal frequency
+  envelope $\mathcal{C}= \left\{ c_{k} \right\}_{k},$  i.e.
+  \begin{equation*}
+    \mathcal{C}^{0}\leq C
+  \end{equation*}
+\end{lemma}
+\begin{proof}
+  $M$ satisfies (i) $\norm{Mf}_{L^{2}}\leq C \norm{f}_{L^{2}}$  and (ii)
+  $M(f+g) \leq Mf+Mg$.  Given a frequency envelope  $\mathcal{C}^{0}$, define
+  the max frequency envelope $C$ as follows
+  \begin{equation*}
+    C = \sum_{k=0}^{\infty}(2C)^{-k}M^{k}c^{0} 
+  \end{equation*}
+\end{proof}
+
+\begin{definition}[Frequency Envelope Control Norm]
+  \label{def:frequency-envelope-control-norm}
+  Let $X$ be a translation invariant function space. We denote by $X_{C}$ the
+  associated \textbf{frequency envelope control norm}
+  \begin{equation*}
+    \norm{u}_{X_{C}} = \sup_{k}C_{k}^{-1} \norm{u_{k}}_{X}.
+  \end{equation*}
+\end{definition}
+Recall \textbf{Lemma 3.4.} says that for $C(u,\bar{u},u)$, we have the bound
+\begin{equation}\label{eq:lemma3.4-inequality}
+  \norm{C(u,\bar{u},u)}_{Y} \lesssim \norm{u}_{X}^{3}
+\end{equation}  
+Actually we have something better, which is \textbf{Lemma 3.6} that says for
+$C(u,\bar{u},u)$, we have
+\begin{equation*}
+  \norm{C_{k}(u,\bar{u},u)}_{Y_{C}} \lesssim \norm{u}_{X_{C}}^{3}.
+\end{equation*}
+\begin{proof}[Proof of Lemma 3.4]
+  Define $c_{k}= \norm{u_{k}}_{X_{k}}$, and $d_{k}=\norm{v_{k}}_{X_{k}}$  where
+  $v$ is defined as in \cref{eq:24}. By duality, to prove
+  \cref{eq:lemma3.4-inequality}, we need to show that
+  \begin{equation*}
+    \left| I \right| \leq  \norm{u}_{X}^{3}\norm{v}_{X}
+  \end{equation*}
+  where
+  \begin{equation*}
+    I = \int_{\mathbb{R}} \bar{v}C(u,\bar{u},u)dx
+  \end{equation*}
+  We will use the unit-scale frequency decompoisition to separate the integral
+  $I$ as follows:
+  \begin{equation*}
+    I = \sum_{k_{1}-k_{2}+k_{3}=k}
+    \int C_{k_{1}k_{2}k_{3}}(u_{k_{1}},\bar{u}_{k_{2}},u_{k_{3}})
+    \bar{v}_{k} dx
+  \end{equation*}
+  i.e. we've localized the entries of hte first term in the integrand. You can
+  think of this as multiplication of four factor because of the properties of
+  $C$ (bounded derivatives, etc):
+  \begin{equation*}
+    u_{k_{1}},\quad \bar{u}_{k_{2}},\quad u_{k_{3}}, \quad \text{and} \quad v_{k}
+  \end{equation*}
+  \pnote{should the last term be $\bar{v}_{k} $?}
+
+  See \ref{fig:triangles}.
+
+  \begin{figure}[h]
+    \centering
+    \includegraphics[scale=.2]{triangles}
+    \caption{Triangles.}
+    \label{fig:triangles}
+  \end{figure}
+
+
+  And then we use the bilinear estimate
+  \begin{equation*}
+    \norm{u_{k_{1}}u_{k_{2}}}_{L^{2}_{t,x}} \leq  \frac{1}{\left\langle   k_{1}-k_{2}\right\rangle} \frac{1}{2} \norm{u_{k_{1}}}_{X_{k}}\norm{u_{k_{2}}}_{L^{\infty}_{t,x}}
+  \end{equation*}
+  (Think of the norms on the right hand side as being like $L^{\infty}_{t,x}$ or
+  this won't make sense).
+
+  Let $\delta \kappa^{\rm hi} = \max \left| k_{i}-k_{j} \right|$ and becasue of
+  $k_{1}-k_{2}+k_{3}= k_{(4)}$, we have two points at distance
+  $\delta \kappa^{\rm hi}$, and we can apply the bilinear estimate
+  \begin{equation*}
+    |I| \leq J:= \sum_{k_{1}+k_{2}+k_{3}-k_{(4)}=0}\frac{1}{\delta\kappa^{\rm hi}} c_{k_{1}}c_{k_{2}}c_{k_{3}}d_{k_{(4)}}
+  \end{equation*}
+  So in fact we need to show that
+  \begin{equation*}
+    J \lesssim \norm{C}_{\ell^{2}}^{3}\norm{d}_{\ell^{2}}
+  \end{equation*}
+  Let $n$ be dyadic of size $\left\langle \delta\kappa^{\rm hi} \right\rangle$,
+  and without loss of generality, we may assume that
+  \begin{equation*}
+    \left| k_{(4)}-k_{3} \right|
+    \approx
+    \left| k_{(4)}-k_{2} \right|
+    \approx
+    n
+  \end{equation*}
+  and
+  \begin{equation*}
+    \left| k_{(4)}-k_{1} \right|
+    \lesssim n.
+  \end{equation*}
+  Then we use Cauchy-Shwarz for $(k_{2},k_{3})$,
+  \begin{equation*}
+    J \leq \sum_{k}\sum_{n}c_{n}^{2}\frac{1}{n}\sum_{\left| k_{(4)}-k_{1} \right| \leq n} c_{k_{1}}d_{k}   
+  \end{equation*}
+  where 
+  \begin{equation*}
+    c_{n}^{2} = \sum_{|j-k|\approx n}c_{j}^{2}.
+  \end{equation*}
+  Then
+  \begin{equation*}
+    \frac{1}{n}\sum_{\left| k_{(4)}-k-1 \right| \leq  n} c_{k_{1}} \leq Mc_{k}
+  \end{equation*}
+  so that, applying Cauchy-Shwarz inequality twice again gives
+  \begin{equation*}
+    J 
+    \lesssim \sum_{k}M c_{k}d_{k}\sum_{n}c_{n}^{2} 
+    \leq \norm{MC}_{\ell^{2}}\norm{d}_{\ell^{2}}\norm{c}_{\ell^{2}}^{2}
+    \leq \norm{C}_{\ell^{2}}^{3}\norm{d}_{\ell^{2}}.
+  \end{equation*}
+\end{proof}
+
 \end{document}
+
 
 \bibliographystyle{siam.bst}
 \bibliography{bibliography}
