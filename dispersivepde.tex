@@ -2742,8 +2742,174 @@ $C(u,\bar{u},u)$, we have
   \end{equation*}
 \end{proof}
 
+\section{Lecture: 2022-12-14}
+
+The main result is the following.
+\begin{theorem}
+  If
+  \begin{align*}
+    iu_{t}+u_{xx}&=C(u,\bar{u},u) \quad [|u|^{2}u = u\bar{u}u]\\
+    u_{0}&=u(0,x)
+  \end{align*}
+  and assuming that $C(u,\bar{u},u)$ satisfies additional symmetry $H1-H3+$ (?),
+  then the following holds (assuming the
+  $id\norm{u_{0}}_{L^{2}}\leq \epsilon \leq 1$)
+  \begin{itemize}
+    \item We have a global solution
+    \begin{equation*}
+      \norm{u}_{L^{\infty}_{t}L_{x}^{2}}\lesssim \epsilon
+    \end{equation*}
+    \item with
+    \begin{equation*}
+      \norm{u}_{L^{6}_{t,x}}\leq \epsilon
+    \end{equation*}
+    \item and Bilinear Strichartz
+    \begin{equation*}
+      \norm{\partial_{x}u\bar{u}(\cdot + x_{0})}_{L_{t}^{2}H_{x}^{-\frac{1}{2}}} 
+      \leq \epsilon^{2}, \quad x\in \R
+    \end{equation*}
+  \end{itemize}
+\end{theorem}
+\begin{remark}
+  The proof has the following main ingredients: (1) Morawetz (interaction)
+  functional, (2) Frequency envelope for unit scale frequency decomposition, and
+  (3) a boostrap argument.
+
+  Let's discuss (1). In the context of linear Schroedinger [i.e.
+  $i\partial_{t}u+u_{xx}=0$], we have the functional
+  \begin{equation*}
+    \mathrm{II}(u,v) 
+    = \int_{x>y}M(u)(x)P(v)(y)-M(v)(y)P(u)(x)dxdy
+  \end{equation*}
+  and
+  \begin{equation*}
+    \frac{d}{dt}\mathrm{II} 
+    = \int_{x>y}M_{t}(u)(x)P(v)(y)-M_{t}(u)(x)\partial_{x}E dxdy
+  \end{equation*}
+  use $\partial_{t}M = \partial_{x}P$ and $\partial_{t}P = \partial_{x}E$, and
+  using the Fundamental Theorem of Calculus, we get
+  \begin{align*}
+    \frac{d}{dt}\mathrm{II}
+    &= \int M(u)E(v)+M(v)E(u)-2P(u)P(v)dx\\
+    &= \int J^{4}(u,\bar{u},v,\bar{v})dx 
+  \end{align*}
+  Here we can take the symbol of $J^{4}$ to be
+  $j^{4}(\xi_{1},\xi_{2},\xi_{3},\xi_{4})=4(\xi_{1}-\xi_{4})(\xi_{2}-\xi_{3}) =
+  4 \left| \partial_{x}(u\bar{v}) \right|^{2}$ which comes from the symbols of
+  the terms in the integrand. It turns out we can do something similar in the
+  nonlinear case. For the nonlinear problem we derived an interaction Morawetz
+  basically the same as above:
+
+  \begin{equation*}
+    \mathrm{II}(u,v) 
+    = \int_{x>y}M^{\#}(u)(x)P^{\#}(v)(y)-M^{\#}(v)(y)P^{\#}(u)(x)dxdy 
+  \end{equation*}
+  where $M^{\#},P^{\#}$ correspond to modified mass and momentum. Then
+  \begin{equation*}
+    \frac{d}{dt}\mathrm{II}(u,v) 
+    = J^{4}+J^{6}+J^{8}+K^{8}
+  \end{equation*}
+  where the last terms are perturbative. The second term is $L^{1}$ and the
+  $J^{4}$ is bilinear. We wish to bound the quantity
+  \begin{equation*}
+    \left| \frac{d}{dt}\mathrm{I}(u,v) \right|,
+  \end{equation*}
+  and the first term will be bounded using Bilinear Strichartz, the second by
+  $L^{6}_{t,x}$.
+\end{remark}
+
+Last time we started constructing $M^{\#}(u)$. Recall
+$\Delta^{4}\xi=\xi_{1}-\xi_{2}+\xi_{3}-\xi_{4}$ and $\Delta^{4}\xi^{2}=\xi^{2}_{1}-\xi^{2}_{2}+\xi^{2}_{3}-\xi^{2}_{4}$ 
+\begin{equation*}
+  \frac{d}{dt}M(u(t)) 
+  = \frac{d}{dt} \norm{u}_{L^{2}}^{2}
+\end{equation*}
+Recall
+\begin{equation*}
+  M^{\#}= M + B^{4}_{m}(u,\bar{u},u,u)
+\end{equation*}
+\begin{equation*}
+  C^{4}(u,\bar{u},u,\bar{u}) 
+  = -i \bar{u}C(u,\bar{u},u)+iu\bar{C}(u,\bar{u},u)
+\end{equation*}
+and
+\begin{equation*}
+  R
+  = \left\{\Delta \xi = 0, \Delta ^{4}\xi^{2}=0\right\}
+  = \left\{\Delta \xi = 0, \Delta ^{4}\xi^{2}=0\right\}
+  = \left\{\left\{\xi_{1},\xi_{2}\right\}= \left\{\xi_{2},\xi_{4}\right\}\right\}
+\end{equation*}
+and the symbol of $B^{4}_{m}$  satisfies
+\begin{equation*}
+  C^{4}_{m}+i\Delta^{4}\xi^{2}b_{m}^{4}= i\Delta^{4}\xi r_{m}^{4}
+\end{equation*}
+where $r_{m}$ is a remainder function, and this expression is nonzero whenever
+$\Delta^{4}\xi^{2}\neq 0$. The way we defined things, we get
+\begin{equation*}
+  b_{m}^{4} 
+  = -i \frac{c^{4}(\xi_{1},\xi_{2},\xi_{3},\xi_{4})}{\Delta^{4}\xi^{2}}.
+\end{equation*}
+This implies
+\begin{equation*}
+  \partial_{t}M^{\#}(u) 
+  = \partial_{x}\left(P+R^{4}_{m}(u,\bar{u},u,\bar{u})\right)
+  + R^{6}_{m}(u,\bar{u},u,\bar{u})
+\end{equation*}
+We want to determine $r^{4}$ and $b^{4}$ uniquely on the
+diagonal, and they can be extended (but not in a unique manner). We want them to
+be as small as possible. This kind of problem is called a ``divisor problem''.
+
+The densities are not Galilean invariant. And the resonance set messes with
+Galilean invariance, but it needs to be preserved with respect to translations
+in space. The problem expression is
+\begin{equation*}
+  \Delta^{4} \xi^{2} + \xi_{1}^{2}-\xi_{2}^{2}+\xi_{3}^{2}-\xi_{4}^{2}.
+\end{equation*}
+We modify the time resonance set as follows (???)
+\begin{equation*}
+  \tilde{\Delta}^{4}\xi^{2}
+  = \Delta^{4}\xi^{2}-2 \left\{ \text{are negative } \Delta^{4}\right\}
+  = \frac{1}{2} \left( \left( \xi_{1}-\xi_{2} \right)^{2}-\left( \xi_{2}-\xi_{1} \right)^{2}   \right) 
+\end{equation*}
+along with
+\begin{equation*}
+  \Delta^{4}\xi = 0.
+\end{equation*}
+
+Next we measure the size of $\tilde{\Delta}^{4}\xi^{2}$ and $\Delta^{4}\xi$. Define
+\begin{equation*}
+  \delta\xi^{\rm hi} = \max \left\{\left| \xi_{1}-\xi_{2} \right| + \left| \xi_{2}-\xi_{4} \right|, \left| \xi_{1}-\xi_{4} \right| + \left| \xi_{3}-\xi_{2} \right|\right\}
+\end{equation*}
+and
+\begin{equation*}
+  \delta\xi^{\rm med} = \min \left\{\left| \xi_{1}-\xi_{2} \right| + \left| \xi_{2}-\xi_{4} \right|, \left| \xi_{1}-\xi_{4} \right| + \left| \xi_{3}-\xi_{2} \right|\right\}
+\end{equation*}
+
+Note
+\begin{equation*}
+  \left| \Delta^{4}\xi  \right| 
+  \lesssim \delta \xi^{\rm med}
+\end{equation*}
+and
+\begin{equation*}
+  \left| \tilde{\Delta}\xi^{2}  \right| 
+  \lesssim \delta \xi^{\rm hi} \delta\xi^{\rm ed}
+\end{equation*}
+We decompose the phase space into three overlapping regions (see Figure \ref{fig:xi}).
+\begin{enumerate}
+  \item $\Omega_{1} = \left\{\delta\xi^{\rm med}\leq 1\right\}$
+  \item $\Omega_{2} = \left\{1+ \left| \Delta^{4}\xi \right| << 
+    \delta\xi^{\rm med}\right\}$
+  \item $\Omega_{3} = \left\{1<< \delta\xi^{\rm med}\lesssim \left| \Delta^{4}\xi  \right|\right\}$ 
+\end{enumerate}
+\begin{figure}[h]
+  \centering
+  \includegraphics[scale=.4]{xi}
+  \label{fig:xi}
+\end{figure}
 \end{document}
 
+Now we return to the modified mass and use these subsets of the phase space to form estimates.
 
 \bibliographystyle{siam.bst}
 \bibliography{bibliography}
